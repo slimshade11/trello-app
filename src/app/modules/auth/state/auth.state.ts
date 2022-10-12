@@ -8,8 +8,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthState {
   private currentUser$: BehaviorSubject<CurrentUser | null | undefined> =
     new BehaviorSubject<CurrentUser | null | undefined>(undefined);
-  private isCurrentUserLoading$: BehaviorSubject<boolean> =
-    new BehaviorSubject<boolean>(false);
 
   setCurrentUser(user: CurrentUser | null): void {
     this.currentUser$.next(user);
@@ -17,13 +15,5 @@ export class AuthState {
 
   getCurrentUser$(): Observable<CurrentUser | null | undefined> {
     return this.currentUser$.asObservable();
-  }
-
-  setIsCurrentUserLoading(isLoading: boolean): void {
-    this.isCurrentUserLoading$.next(isLoading);
-  }
-
-  getIsCurrentUserLoading$(): Observable<boolean> {
-    return this.isCurrentUserLoading$.asObservable();
   }
 }

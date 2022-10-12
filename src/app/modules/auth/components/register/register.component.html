@@ -16,10 +16,8 @@
       class="py-3 px-6 border-round-lg shadow container-md"
     >
       <h3 class="text-center mt-2">Register to Trello</h3>
-
-      <ul class="font-light text-pink-500">
-        <!-- Errors here -->
-        <li>Error example</li>
+      <ul *ngIf="errors.length" class="font-light text-pink-500">
+        <li *ngFor="let error of errors">{{ error }}</li>
       </ul>
 
       <span class="p-float-label mt-5">
@@ -52,9 +50,13 @@
         />
         <label for="password">Password</label>
       </span>
-
       <div class="mt-6">
-        <p-button styleClass="w-full" label="Register" type="submit"></p-button>
+        <p-button
+          [disabled]="!form.valid"
+          styleClass="w-full"
+          label="Register"
+          type="submit"
+        ></p-button>
       </div>
       <div class="mt-3">
         <p-button
@@ -65,6 +67,7 @@
       </div>
     </form>
   </ng-container>
+
   <ng-template #loading>
     <div class="flex justify-content-center">
       <p-progressSpinner></p-progressSpinner>

@@ -23,6 +23,9 @@
       "@app/*": ["src/app/*"],
       "@auth/*": ["src/app/modules/auth/*"],
       "@shared/*": ["src/app/modules/shared/*"],
+      "@services/*": ["src/app/core/services/*"],
+      "@interfaces/*": ["src/app/core/interfaces/*"],
+      "@enums/*": ["src/app/core/enums/*"],
       "@standalone/*": ["src/app/standalone/*"]
     }
   },

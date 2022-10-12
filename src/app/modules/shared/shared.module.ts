@@ -6,6 +6,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [],
@@ -15,12 +16,14 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     PasswordModule,
     ButtonModule,
     ProgressSpinnerModule,
+    ToastModule,
   ],
   exports: [
     InputTextModule,
     PasswordModule,
     ButtonModule,
     ProgressSpinnerModule,
+    ToastModule,
   ],
 })
 export class SharedModule {}
