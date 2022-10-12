@@ -1,4 +1,4 @@
-import { catchError, finalize, Observable, of, tap, throwError } from 'rxjs';
+import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
 import { AuthApi } from '@auth/api/auth.api';
 import { Injectable } from '@angular/core';
 import { AuthState } from '@auth/state/auth.state';

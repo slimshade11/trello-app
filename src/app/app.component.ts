@@ -1,4 +1,4 @@
-import { CurrentUser } from './modules/auth/interfaces/current-user.interface';
+import { CurrentUser } from '@auth/interfaces/current-user.interface';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { AuthFacade } from '@auth/auth.facade';
@@ -16,7 +16,5 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.authFacade.loadCurrentUser$().subscribe();
-
-    this.currentUser$.subscribe((r) => console.log(r));
   }
 }
