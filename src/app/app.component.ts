@@ -1,7 +1,7 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { CurrentUser } from './modules/auth/interfaces/current-user.interface';
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './modules/auth/services/auth.service';
-import { AuthState } from './modules/auth/state/auth.state';
+import { AuthFacade } from '@auth/auth.facade';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +9,14 @@ import { AuthState } from './modules/auth/state/auth.state';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private authService: AuthService, private authState: AuthState) {}
+  currentUser$: Observable<CurrentUser | null | undefined> =
+    this.authFacade.getCurrentUser$();
+
+  constructor(private authFacade: AuthFacade) {}
 
   ngOnInit(): void {
-    this.authService.getCurrentUser$().subscribe({
-      next: () => {},
-      error: (err: HttpErrorResponse) => {
-        console.log(err.message);
-        this.authState.setCurrentUser(null);
-      },
-    });
+    this.authFacade.loadCurrentUser$().subscribe();
+
+    this.currentUser$.subscribe((r) => console.log(r));
   }
 }
