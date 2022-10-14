@@ -8,15 +8,14 @@
       class="w-3 mx-auto"
     />
   </a>
-
   <ng-container *ngIf="form; else loading">
     <form
       [formGroup]="form"
       (ngSubmit)="onSubmit()"
       class="py-3 px-6 border-round-lg shadow container-md"
     >
-      <h3 class="text-center mt-2">Register to Trello</h3>
-      <ul *ngIf="errors.length" class="font-light text-pink-500">
+      <h3 class="text-center text-5xl mt-2">Register to Trello</h3>
+      <ul *ngIf="errors?.length" class="font-light text-pink-500">
         <li *ngFor="let error of errors">{{ error }}</li>
       </ul>
 
@@ -53,6 +52,7 @@
       <div class="mt-6">
         <p-button
           [disabled]="!form.valid"
+          [icon]="(isAuthLoading$ | async) ? 'pi pi-spin pi-spinner' : ''"
           styleClass="w-full"
           label="Register"
           type="submit"

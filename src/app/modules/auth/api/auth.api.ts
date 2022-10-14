@@ -5,6 +5,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RegisterRequest } from '@auth/interfaces/register-request.interface';
 import { CurrentUser } from '@auth/interfaces/current-user.interface';
+import { LoginRequest } from '@auth/interfaces/login-request.interface';
 
 @Injectable()
 export class AuthApi {
@@ -21,6 +22,13 @@ export class AuthApi {
     return this.http.post<CurrentUser>(
       `${this.appConfig.BASE_URL}/users`,
       registerPayload
+    );
+  }
+
+  login$(loginPayload: LoginRequest): Observable<CurrentUser> {
+    return this.http.post<CurrentUser>(
+      `${this.appConfig.BASE_URL}/users/login`,
+      loginPayload
     );
   }
 }

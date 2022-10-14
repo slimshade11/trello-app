@@ -7,9 +7,11 @@ import { PasswordModule } from 'primeng/password';
 import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
+import { MenubarModule } from 'primeng/menubar';
+import { MenubarComponent } from './components/menubar/menubar.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [MenubarComponent],
   imports: [
     CommonModule,
     InputTextModule,
@@ -17,6 +19,7 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     ProgressSpinnerModule,
     ToastModule,
+    MenubarModule,
   ],
   exports: [
     InputTextModule,
@@ -24,6 +27,8 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     ProgressSpinnerModule,
     ToastModule,
+    MenubarModule,
+    MenubarComponent,
   ],
 })
 export class SharedModule {}

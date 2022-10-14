@@ -27,11 +27,14 @@
             "styles": [
               "src/styles.scss",
               "./node_modules/primeflex/primeflex.min.css",
-              "./node_modules/primeicons/primeicons.css",
               "./node_modules/primeng/resources/primeng.css",
+              "./node_modules/primeicons/primeicons.css",
               "./node_modules/primeng/resources/themes/vela-blue/theme.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/assets/styles"]
+            }
           },
           "configurations": {
             "production": {

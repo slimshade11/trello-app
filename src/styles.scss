@@ -1,4 +1,28 @@
+@use "custom-styles";
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;500;700&display=swap");
+
+$xs: 450px;
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+$xxl: 1400px;
+
+$resolutions: (
+  "xs": $xs,
+  "sm": $sm,
+  "md": $md,
+  "lg": $lg,
+  "xl": $xl,
+  "xxl": $xxl,
+);
+
+@each $resolution, $i in $resolutions {
+  .container-max-w-#{$resolution} {
+    max-width: #{$i};
+    margin: 0 auto !important;
+  }
+}
 
 *,
 *::before,
@@ -11,4 +35,13 @@
 
 .shadow {
   box-shadow: 0 0 5px 5px rgba(255, 255, 255, 0.1);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.h-screen-menu {
+  min-height: calc(100vh - 64px) !important;
 }
