@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { BoardsApi } from '../../api/boards.api';
+import { BoardsFacade } from '@boards/boards.facade';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-boards',
@@ -7,11 +8,13 @@ import { BoardsApi } from '../../api/boards.api';
   styleUrls: ['./boards.component.scss'],
 })
 export class BoardsComponent implements OnInit {
-  constructor(private boards: BoardsApi) {}
+  isBoardsLoading$: Observable<boolean> =
+    this.boardsFacade.getIsBoardsLoading$();
+
+  constructor(private boardsFacade: BoardsFacade) {}
 
   ngOnInit(): void {
-    this.boards.loadBoards$().subscribe((d) => {
-      console.log('dwa');
+    this.boardsFacade.getBoards$().subscribe((d) => {
       console.log(d);
     });
   }

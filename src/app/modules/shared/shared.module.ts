@@ -9,9 +9,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { MenubarModule } from 'primeng/menubar';
 import { MenubarComponent } from './components/menubar/menubar.component';
+import { InlineFormComponent } from './components/inline-form/inline-form.component';
 
 @NgModule({
-  declarations: [MenubarComponent],
+  declarations: [MenubarComponent, InlineFormComponent],
   imports: [
     CommonModule,
     InputTextModule,
