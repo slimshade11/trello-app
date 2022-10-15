@@ -23,7 +23,9 @@ export class AuthFacade {
 
   loadCurrentUser$(): Observable<CurrentUser> {
     return this.authApi.loadCurrentUser$().pipe(
-      tap((currentUser: CurrentUser) => console.log(currentUser)), // store current user in state
+      tap((currentUser: CurrentUser) => {
+        this.authState.setCurrentUser(currentUser);
+      }),
       catchError((err: HttpErrorResponse) => {
         this.authState.setCurrentUser(null);
         return throwError(err);

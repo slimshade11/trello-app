@@ -27,6 +27,7 @@
       "@services/*": ["src/app/core/services/*"],
       "@interfaces/*": ["src/app/core/interfaces/*"],
       "@enums/*": ["src/app/core/enums/*"],
+      "@interceptors/*": ["src/app/core/interceptors/*"],
       "@standalone/*": ["src/app/standalone/*"]
     }
   },
