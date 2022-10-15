@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Self } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -11,7 +11,7 @@ import { Config } from '@enums/config.enum';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private persistanceService: PersistanceService) {}
+  constructor(@Self() private persistanceService: PersistanceService) {}
 
   intercept(
     request: HttpRequest<unknown>,
