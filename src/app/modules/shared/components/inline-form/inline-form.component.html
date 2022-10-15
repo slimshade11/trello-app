@@ -1,1 +1,35 @@
-<p>inline-form works!</p>
+<div
+  class="inline-form-container"
+  [class.inline-form-container-editing]="isEditing"
+  (click)="activeEditing()"
+>
+  <ng-container *ngIf="!isEditing; else editing">
+    <div class="inline-form-text">
+      {{ defaultText }}
+    </div>
+  </ng-container>
+
+  <ng-template #editing>
+    <form
+      *ngIf="isEditing"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="inline-form"
+    ></form>
+
+    <ng-container [ngSwitchCase]="inputType">
+      <span *ngSwitchCase="'input'" class="p-float-label">
+        <input formControlName="title" id="title" type="text" pInputText />
+        <label for="title">{{ inputPlaceholder }}</label>
+      </span>
+
+      <textarea
+        *ngSwitchCase="'textarea'"
+        [rows]="5"
+        [cols]="30"
+        pInputTextarea
+        [autoResize]="true"
+      ></textarea>
+    </ng-container>
+  </ng-template>
+</div>

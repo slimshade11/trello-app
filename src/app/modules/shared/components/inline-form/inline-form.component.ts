@@ -1,15 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { InlineForm } from '@app/core/interfaces/inline-form.interface';
 
 @Component({
   selector: 'app-inline-form',
   templateUrl: './inline-form.component.html',
-  styleUrls: ['./inline-form.component.scss']
+  styleUrls: ['./inline-form.component.scss'],
 })
-export class InlineFormComponent implements OnInit {
+export class InlineFormComponent {
+  @Input() title: string = '';
+  @Input() defaultText: string = 'Not defined';
+  @Input() hasButton: boolean = false;
+  @Input() buttonText: string = 'Submit';
+  @Input() inputPlaceholder: string = '';
+  @Input() inputType: string = 'input';
 
-  constructor() { }
+  @Output() handleSubmit = new EventEmitter<string>();
 
-  ngOnInit(): void {
+  isEditing: boolean = false;
+  form: FormGroup<InlineForm> = this.fb.group({
+    title: [''],
+  });
+
+  constructor(private fb: FormBuilder) {}
+
+  activeEditing(): void {
+    if (this.title) {
+      this.form.patchValue({ title: this.title });
+    }
+
+    this.isEditing = true;
   }
 
+  onSubmit(): void {
+    if (this.form.value.title) {
+      this.handleSubmit.emit(this.form.value.title);
+    }
+
+    this.isEditing = false;
+    this.form.reset();
+  }
 }

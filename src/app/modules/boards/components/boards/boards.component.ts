@@ -1,21 +1,22 @@
+import { Board } from '@boards/interfaces/board.interface';
 import { Component, OnInit } from '@angular/core';
+import { DestroyComponent } from '@standalone/components/destroy/destroy.component';
 import { BoardsFacade } from '@boards/boards.facade';
-import { Observable } from 'rxjs';
+import { Observable, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-boards',
   templateUrl: './boards.component.html',
   styleUrls: ['./boards.component.scss'],
 })
-export class BoardsComponent implements OnInit {
+export class BoardsComponent extends DestroyComponent implements OnInit {
   isBoardsLoading$: Observable<boolean> =
     this.boardsFacade.getIsBoardsLoading$();
+  boards$: Observable<Board[]> = this.boardsFacade.getBoards$();
 
-  constructor(private boardsFacade: BoardsFacade) {}
-
-  ngOnInit(): void {
-    this.boardsFacade.getBoards$().subscribe((d) => {
-      console.log(d);
-    });
+  constructor(private boardsFacade: BoardsFacade) {
+    super();
   }
+
+  ngOnInit(): void {}
 }

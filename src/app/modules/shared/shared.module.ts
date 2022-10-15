@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MenubarComponent } from '@shared/components/menubar/menubar.component';
+import { InlineFormComponent } from '@shared/components/inline-form/inline-form.component';
 
 //Primeng modules
 import { InputTextModule } from 'primeng/inputtext';
@@ -8,8 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { MenubarModule } from 'primeng/menubar';
-import { MenubarComponent } from './components/menubar/menubar.component';
-import { InlineFormComponent } from './components/inline-form/inline-form.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [MenubarComponent, InlineFormComponent],
@@ -21,6 +23,8 @@ import { InlineFormComponent } from './components/inline-form/inline-form.compon
     ProgressSpinnerModule,
     ToastModule,
     MenubarModule,
+    ReactiveFormsModule,
+    InputTextareaModule,
   ],
   exports: [
     InputTextModule,
@@ -30,6 +34,7 @@ import { InlineFormComponent } from './components/inline-form/inline-form.compon
     ToastModule,
     MenubarModule,
     MenubarComponent,
+    InputTextareaModule,
   ],
 })
 export class SharedModule {}
