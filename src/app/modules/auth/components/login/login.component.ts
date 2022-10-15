@@ -55,8 +55,6 @@ export class LoginComponent extends DestroyComponent implements OnInit {
     this.authFacade.login$(loginPayload).subscribe({
       error: (err: HttpErrorResponse) => {
         this.error = err.error.emailOrPassword;
-        // console.log(err.error);
-        console.log(err);
       },
     });
     this.form.reset();

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthFacade } from '@auth/auth.facade';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor(private authFacade: AuthFacade, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authFacade.getIsLoggedIn$().subscribe({
+      next: (isLoggedIn: boolean) => {
+        if (isLoggedIn) {
+          this.router.navigateByUrl('/boards');
+        }
+      },
+    });
+  }
 }

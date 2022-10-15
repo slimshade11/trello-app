@@ -18,7 +18,6 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const token: string = this.persistanceService.get(Config.TOKEN);
-    console.log(token);
 
     request = request.clone({
       setHeaders: {

@@ -7,11 +7,12 @@ import { AuthRoutingModule } from '@auth/auth-routing-module';
 import { SharedModule } from '@shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@auth/services/auth.service';
-import { LoginComponent } from './components/login/login.component';
+import { LoginComponent } from '@auth/components/login/login.component';
+import { AuthGuard } from '@auth/guards/auth.guard';
 
 @NgModule({
   declarations: [RegisterComponent, LoginComponent],
   imports: [CommonModule, AuthRoutingModule, SharedModule, ReactiveFormsModule],
-  providers: [AuthFacade, AuthApi, AuthService],
+  providers: [AuthFacade, AuthApi, AuthService, AuthGuard],
 })
 export class AuthModule {}

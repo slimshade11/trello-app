@@ -88,4 +88,8 @@ export class AuthFacade {
   getIsAuthLoading$(): Observable<boolean> {
     return this.authState.getIsAuthLoading();
   }
+
+  getIsLoggedIn$(): Observable<boolean> {
+    return this.authState.getIsLoggedIn$();
+  }
 }
