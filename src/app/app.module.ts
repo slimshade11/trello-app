@@ -7,10 +7,18 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from '@services/app-config.service';
 import { MessageService } from 'primeng/api';
 import { AuthInterceptor } from '@interceptors/auth.interceptor';
+import { BoardsComponent } from '@boards/components/boards/boards.component';
+import { BoardsModule } from '@boards/boards.module';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, AuthModule, HttpClientModule],
+  declarations: [AppComponent, BoardsComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AuthModule,
+    HttpClientModule,
+    BoardsModule,
+  ],
   providers: [
     {
       provide: APP_SERVICE_CONFIG,

@@ -23,6 +23,7 @@
       "@app/*": ["src/app/*"],
       "@auth/*": ["src/app/modules/auth/*"],
       "@home/*": ["src/app/modules/home/*"],
+      "@boards/*": ["src/app/modules/boards/*"],
       "@shared/*": ["src/app/modules/shared/*"],
       "@services/*": ["src/app/core/services/*"],
       "@interfaces/*": ["src/app/core/interfaces/*"],
