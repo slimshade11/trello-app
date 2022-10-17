@@ -1,6 +1,10 @@
 import { ToastService } from '@services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Board } from '@boards/interfaces/board.interface';
+import { Injectable } from '@angular/core';
+import { BoardsApi } from '@boards/api/boards.api';
+import { BoardsState } from '@boards/state/boards.state';
+import { ToastStatus } from '@enums/toast-status.enum';
 import {
   Observable,
   tap,
@@ -11,17 +15,15 @@ import {
   map,
   take,
 } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { BoardsApi } from '@boards/api/boards.api';
-import { BoardsState } from '@boards/state/boards.state';
-import { ToastStatus } from '@app/core/enums/toast-status.enum';
+import { AuthFacade } from '@auth/auth.facade';
 
 @Injectable()
 export class BoardsFacade {
   constructor(
     private boardsApi: BoardsApi,
     private boardsState: BoardsState,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private authFacade: AuthFacade
   ) {}
 
   loadBoards$(): Observable<Board[]> {
@@ -55,6 +57,10 @@ export class BoardsFacade {
         );
       })
     );
+  }
+
+  logout(): void {
+    this.authFacade.logout();
   }
 
   getIsBoardsLoading$(): Observable<boolean> {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MenubarComponent } from '@shared/components/menubar/menubar.component';
 import { InlineFormComponent } from '@shared/components/inline-form/inline-form.component';
+import { TopBarComponent } from '@shared/components/top-bar/top-bar.component';
 
 //Primeng modules
 import { InputTextModule } from 'primeng/inputtext';
@@ -14,7 +15,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
-  declarations: [MenubarComponent, InlineFormComponent],
+  declarations: [MenubarComponent, InlineFormComponent, TopBarComponent],
   imports: [
     CommonModule,
     InputTextModule,
@@ -36,6 +37,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     MenubarComponent,
     InputTextareaModule,
     InlineFormComponent,
+    TopBarComponent,
   ],
 })
 export class SharedModule {}

@@ -77,6 +77,12 @@ export class AuthFacade {
     );
   }
 
+  logout(): void {
+    this.authService.logout();
+    this.authState.setCurrentUser(null);
+    this.router.navigateByUrl('/');
+  }
+
   getCurrentUser$(): Observable<CurrentUser | null | undefined> {
     return this.authState.getCurrentUser$();
   }
