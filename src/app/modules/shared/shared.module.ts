@@ -35,6 +35,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     MenubarModule,
     MenubarComponent,
     InputTextareaModule,
+    InlineFormComponent,
   ],
 })
 export class SharedModule {}

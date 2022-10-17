@@ -18,5 +18,11 @@ export class BoardsComponent extends DestroyComponent implements OnInit {
     super();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.boardsFacade.loadBoards$().pipe(takeUntil(this.destroy$)).subscribe();
+  }
+
+  createBoard(title: string): void {
+    this.boardsFacade.createBoard$(title).subscribe();
+  }
 }

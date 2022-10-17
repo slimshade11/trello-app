@@ -12,24 +12,31 @@
   <ng-template #editing>
     <form
       *ngIf="isEditing"
-      [formGroup]="form"
       (ngSubmit)="onSubmit()"
+      [formGroup]="form"
       class="inline-form"
-    ></form>
+    >
+      <ng-container *ngIf="inputType === 'input'; else textarea">
+        <span class="p-float-label">
+          <input
+            formControlName="title"
+            id="title"
+            [type]="inputType"
+            pInputText
+          />
+          <label for="title">{{ inputPlaceholder }}</label>
+        </span>
+      </ng-container>
 
-    <ng-container [ngSwitchCase]="inputType">
-      <span *ngSwitchCase="'input'" class="p-float-label">
-        <input formControlName="title" id="title" type="text" pInputText />
-        <label for="title">{{ inputPlaceholder }}</label>
-      </span>
-
-      <textarea
-        *ngSwitchCase="'textarea'"
-        [rows]="5"
-        [cols]="30"
-        pInputTextarea
-        [autoResize]="true"
-      ></textarea>
-    </ng-container>
+      <ng-template #textarea>
+        <textarea
+          *ngSwitchCase="'textarea'"
+          [rows]="5"
+          [cols]="30"
+          pInputTextarea
+          [autoResize]="true"
+        ></textarea>
+      </ng-template>
+    </form>
   </ng-template>
 </div>
