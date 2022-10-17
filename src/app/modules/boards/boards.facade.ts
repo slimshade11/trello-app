@@ -14,6 +14,7 @@ import {
   switchMap,
   map,
   take,
+  filter,
 } from 'rxjs';
 import { AuthFacade } from '@auth/auth.facade';
 
@@ -31,6 +32,23 @@ export class BoardsFacade {
     return this.boardsApi.loadBoards$().pipe(
       tap((boards: Board[]) => this.boardsState.setBoards(boards)),
       catchError((err: HttpErrorResponse) => {
+        return throwError(err);
+      }),
+      finalize(() => this.boardsState.setIsBoardsLoading(false))
+    );
+  }
+
+  loadBoardById$(boardId: string): Observable<Board> {
+    this.boardsState.setIsBoardsLoading(true);
+    return this.boardsApi.loadBoardById(boardId).pipe(
+      filter((board) => !!board),
+      tap((board: Board) => this.boardsState.setBoardDetails(board)),
+      catchError((err: HttpErrorResponse) => {
+        this.toastService.showInfoMessage(
+          ToastStatus.ERROR,
+          'Error!',
+          'Something went wrong'
+        );
         return throwError(err);
       }),
       finalize(() => this.boardsState.setIsBoardsLoading(false))
@@ -69,5 +87,9 @@ export class BoardsFacade {
 
   getBoards$(): Observable<Board[]> {
     return this.boardsState.getBoards$();
+  }
+
+  getBoardDetails$(): Observable<Board | null> {
+    return this.boardsState.getBoardDetails$();
   }
 }

@@ -18,6 +18,10 @@ export class BoardsApi {
     return this.http.get<Board[]>(`${this.appConfig.BASE_URL}/boards`);
   }
 
+  loadBoardById(boardId: string): Observable<Board> {
+    return this.http.get<Board>(`${this.appConfig.BASE_URL}/boards/${boardId}`);
+  }
+
   createBoard$(title: string): Observable<Board> {
     return this.http.post<Board>(`${this.appConfig.BASE_URL}/boards`, {
       title,

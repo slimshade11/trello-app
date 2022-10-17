@@ -5,9 +5,10 @@ import { BoardsFacade } from '@boards/boards.facade';
 import { BoardsComponent } from '@boards/components/boards/boards.component';
 import { BoardsState } from '@boards/state/boards.state';
 import { SharedModule } from '@shared/shared.module';
+import { BoardComponent } from './components/board/board.component';
 
 @NgModule({
-  declarations: [BoardsComponent],
+  declarations: [BoardsComponent, BoardComponent],
   imports: [CommonModule, BoardsRoutingModule, SharedModule],
   providers: [BoardsFacade, BoardsState],
 })
