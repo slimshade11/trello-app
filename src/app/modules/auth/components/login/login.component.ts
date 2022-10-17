@@ -57,6 +57,7 @@ export class LoginComponent extends DestroyComponent implements OnInit {
         this.error = err.error.emailOrPassword;
       },
     });
+
     this.form.reset();
   }
 }

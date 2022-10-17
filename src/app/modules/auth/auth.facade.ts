@@ -38,7 +38,7 @@ export class AuthFacade {
     return this.authApi.register$(registerPayload).pipe(
       tap((currentUser: CurrentUser) => {
         this.authService.setToken(currentUser);
-        this.setCurrentUser(currentUser);
+        this.authState.setCurrentUser(currentUser);
       }),
       tap(() => this.router.navigateByUrl('/')),
       tap(() => {
@@ -49,6 +49,11 @@ export class AuthFacade {
         );
       }),
       catchError((err: HttpErrorResponse) => {
+        this.toastService.showInfoMessage(
+          ToastStatus.ERROR,
+          'Error!',
+          'Something went wrong'
+        );
         return throwError(err);
       }),
       finalize(() => this.authState.setIsAuthLoading(false))
@@ -60,14 +65,14 @@ export class AuthFacade {
     return this.authApi.login$(loginPayload).pipe(
       tap((currentUser: CurrentUser) => {
         this.authService.setToken(currentUser);
-        this.setCurrentUser(currentUser);
+        this.authState.setCurrentUser(currentUser);
       }),
       tap(() => this.router.navigateByUrl('/')),
       tap(() => {
         this.toastService.showInfoMessage(
           ToastStatus.SUCCESS,
           'Success!',
-          'You have been successfully registered '
+          'You have been successfully logged in'
         );
       }),
       catchError((err: HttpErrorResponse) => {
@@ -81,14 +86,15 @@ export class AuthFacade {
     this.authService.logout();
     this.authState.setCurrentUser(null);
     this.router.navigateByUrl('/');
+    this.toastService.showInfoMessage(
+      ToastStatus.INFO,
+      'You have been successfully logged out',
+      ''
+    );
   }
 
   getCurrentUser$(): Observable<CurrentUser | null | undefined> {
     return this.authState.getCurrentUser$();
-  }
-
-  setCurrentUser(user: CurrentUser): void {
-    this.authState.setCurrentUser(user);
   }
 
   getIsAuthLoading$(): Observable<boolean> {
