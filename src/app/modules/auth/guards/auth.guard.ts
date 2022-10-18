@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
     | boolean
     | UrlTree {
     return this.authFacade.getIsLoggedIn$().pipe(
-      map((isLoggedin: boolean) => {
+      map((isLoggedin: boolean): boolean => {
         if (isLoggedin) {
           return true;
         }

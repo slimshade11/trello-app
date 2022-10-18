@@ -13,7 +13,7 @@ export class LoginFormService {
   constructor(private formBuilder: FormBuilder) {}
 
   buildForm(): void {
-    const loginForm = this.formBuilder.group({
+    const loginForm: FormGroup<LoginForm> = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });

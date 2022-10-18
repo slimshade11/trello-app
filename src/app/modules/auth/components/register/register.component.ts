@@ -54,7 +54,7 @@ export class RegisterComponent extends DestroyComponent implements OnInit {
     };
 
     this.authFacade.register$(registerPayload).subscribe({
-      error: (err: HttpErrorResponse) => {
+      error: (err: HttpErrorResponse): void => {
         this.errors = err.error.emailOrPassword;
         console.log(this.errors);
       },

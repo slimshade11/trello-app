@@ -37,7 +37,9 @@ export class LoginComponent extends DestroyComponent implements OnInit {
       .getLoginForm$()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (form: FormGroup<LoginForm> | null) => (this.form = form),
+        next: (form: FormGroup<LoginForm> | null): void => {
+          this.form = form;
+        },
       });
   }
 
@@ -53,7 +55,7 @@ export class LoginComponent extends DestroyComponent implements OnInit {
     };
 
     this.authFacade.login$(loginPayload).subscribe({
-      error: (err: HttpErrorResponse) => {
+      error: (err: HttpErrorResponse): void => {
         this.error = err.error.emailOrPassword;
       },
     });

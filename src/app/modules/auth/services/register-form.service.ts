@@ -3,9 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { RegisterForm } from '@auth/interfaces/register-form.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class RegisterFormService {
   form$: BehaviorSubject<FormGroup<RegisterForm> | null> =
     new BehaviorSubject<FormGroup<RegisterForm> | null>(null);

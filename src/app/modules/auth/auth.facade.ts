@@ -23,10 +23,10 @@ export class AuthFacade {
 
   loadCurrentUser$(): Observable<CurrentUser> {
     return this.authApi.loadCurrentUser$().pipe(
-      tap((currentUser: CurrentUser) => {
+      tap((currentUser: CurrentUser): void => {
         this.authState.setCurrentUser(currentUser);
       }),
-      catchError((err: HttpErrorResponse) => {
+      catchError((err: HttpErrorResponse): Observable<never> => {
         this.authState.setCurrentUser(null);
         return throwError(err);
       })
@@ -36,19 +36,21 @@ export class AuthFacade {
   register$(registerPayload: RegisterRequest): Observable<CurrentUser> {
     this.authState.setIsAuthLoading(true);
     return this.authApi.register$(registerPayload).pipe(
-      tap((currentUser: CurrentUser) => {
+      tap((currentUser: CurrentUser): void => {
         this.authService.setToken(currentUser);
         this.authState.setCurrentUser(currentUser);
       }),
-      tap(() => this.router.navigateByUrl('/')),
-      tap(() => {
+      tap((): void => {
+        this.router.navigateByUrl('/');
+      }),
+      tap((): void => {
         this.toastService.showInfoMessage(
           ToastStatus.SUCCESS,
           'Success!',
           'You have been successfully registered '
         );
       }),
-      catchError((err: HttpErrorResponse) => {
+      catchError((err: HttpErrorResponse): Observable<never> => {
         this.toastService.showInfoMessage(
           ToastStatus.ERROR,
           'Error!',
@@ -56,7 +58,7 @@ export class AuthFacade {
         );
         return throwError(err);
       }),
-      finalize(() => this.authState.setIsAuthLoading(false))
+      finalize((): void => this.authState.setIsAuthLoading(false))
     );
   }
 
@@ -67,18 +69,20 @@ export class AuthFacade {
         this.authService.setToken(currentUser);
         this.authState.setCurrentUser(currentUser);
       }),
-      tap(() => this.router.navigateByUrl('/')),
-      tap(() => {
+      tap((): void => {
+        this.router.navigateByUrl('/');
+      }),
+      tap((): void => {
         this.toastService.showInfoMessage(
           ToastStatus.SUCCESS,
           'Success!',
           'You have been successfully logged in'
         );
       }),
-      catchError((err: HttpErrorResponse) => {
+      catchError((err: HttpErrorResponse): Observable<never> => {
         return throwError(err);
       }),
-      finalize(() => this.authState.setIsAuthLoading(false))
+      finalize((): void => this.authState.setIsAuthLoading(false))
     );
   }
 

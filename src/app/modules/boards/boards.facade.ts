@@ -30,20 +30,20 @@ export class BoardsFacade {
   loadBoards$(): Observable<Board[]> {
     this.boardsState.setIsBoardsLoading(true);
     return this.boardsApi.loadBoards$().pipe(
-      tap((boards: Board[]) => this.boardsState.setBoards(boards)),
-      catchError((err: HttpErrorResponse) => {
+      tap((boards: Board[]): void => this.boardsState.setBoards(boards)),
+      catchError((err: HttpErrorResponse): Observable<never> => {
         return throwError(err);
       }),
-      finalize(() => this.boardsState.setIsBoardsLoading(false))
+      finalize((): void => this.boardsState.setIsBoardsLoading(false))
     );
   }
 
   loadBoardById$(boardId: string): Observable<Board> {
     this.boardsState.setIsBoardsLoading(true);
     return this.boardsApi.loadBoardById(boardId).pipe(
-      filter((board) => !!board),
+      filter((board): boolean => !!board),
       tap((board: Board) => this.boardsState.setBoardDetails(board)),
-      catchError((err: HttpErrorResponse) => {
+      catchError((err: HttpErrorResponse): Observable<never> => {
         this.toastService.showInfoMessage(
           ToastStatus.ERROR,
           'Error!',
@@ -57,14 +57,14 @@ export class BoardsFacade {
 
   createBoard$(title: string): Observable<any> {
     return this.boardsApi.createBoard$(title).pipe(
-      switchMap((createdBoard: Board) => {
+      switchMap((createdBoard: Board): Observable<Board[]> => {
         return this.getBoards$().pipe(
           take(1),
-          map((boards: Board[]) => [...boards, createdBoard]),
-          tap((updatedBoards: Board[]) =>
+          map((boards: Board[]): Board[] => [...boards, createdBoard]),
+          tap((updatedBoards: Board[]): void =>
             this.boardsState.setBoards(updatedBoards)
           ),
-          catchError((err: HttpErrorResponse) => {
+          catchError((err: HttpErrorResponse): Observable<never> => {
             this.toastService.showInfoMessage(
               ToastStatus.ERROR,
               'Error!',
