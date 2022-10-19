@@ -4,6 +4,8 @@ import { Board } from '@boards/interfaces/board.interface';
 import { Injectable } from '@angular/core';
 import { BoardsApi } from '@boards/api/boards.api';
 import { BoardsState } from '@boards/state/boards.state';
+import { SocketService } from '@services/socket.service';
+import { SocketEvents } from '@enums/socket-events.enum';
 import { ToastStatus } from '@enums/toast-status.enum';
 import {
   Observable,
@@ -24,7 +26,8 @@ export class BoardsFacade {
     private boardsApi: BoardsApi,
     private boardsState: BoardsState,
     private toastService: ToastService,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private socketService: SocketService
   ) {}
 
   loadBoards$(): Observable<Board[]> {
@@ -39,6 +42,8 @@ export class BoardsFacade {
   }
 
   loadBoardById$(boardId: string): Observable<Board> {
+    this.socketService.emit(SocketEvents.BOARDS_JOIN, { boardId });
+
     this.boardsState.setIsBoardsLoading(true);
     return this.boardsApi.loadBoardById(boardId).pipe(
       filter((board): boolean => !!board),
@@ -75,6 +80,11 @@ export class BoardsFacade {
         );
       })
     );
+  }
+
+  leaveBoard(boardId: string): void {
+    this.boardsState.setBoardDetails(null);
+    this.socketService.emit(SocketEvents.BOARDS_LEAVE, { boardId });
   }
 
   logout(): void {

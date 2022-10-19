@@ -19,7 +19,7 @@ export class BoardsState {
     return this.boards$.asObservable();
   }
 
-  setBoardDetails(board: Board): void {
+  setBoardDetails(board: Board | null): void {
     this.boardDetails$.next(board);
   }
 

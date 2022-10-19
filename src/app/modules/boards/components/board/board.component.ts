@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
-import { switchMap, take, Observable } from 'rxjs';
+import {
+  ActivatedRoute,
+  NavigationStart,
+  Params,
+  Router,
+} from '@angular/router';
+import { switchMap, take, Observable, tap } from 'rxjs';
 import { BoardsFacade } from '@boards/boards.facade';
 import { Board } from '@boards/interfaces/board.interface';
 
@@ -15,13 +20,17 @@ export class BoardComponent implements OnInit {
   isBoardDetailsLoading$: Observable<boolean> =
     this.boardsFacade.getIsBoardsLoading$();
 
+  boardId!: string;
+
   constructor(
     private activatedRoute: ActivatedRoute,
-    private boardsFacade: BoardsFacade
+    private boardsFacade: BoardsFacade,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loadBoardById();
+    this.initializeListeners();
   }
 
   loadBoardById(): void {
@@ -29,8 +38,22 @@ export class BoardComponent implements OnInit {
       .pipe(
         take(1),
         switchMap((params: Params): Observable<Board> => {
-          const boardId: string = params['id'];
-          return this.boardsFacade.loadBoardById$(boardId);
+          this.boardId = params['id'];
+
+          return this.boardsFacade.loadBoardById$(this.boardId);
+        })
+      )
+      .subscribe();
+  }
+
+  initializeListeners(): void {
+    this.router.events
+      .pipe(
+        tap((event: any): void => {
+          if (event instanceof NavigationStart) {
+            console.log('leaving a page');
+            this.boardsFacade.leaveBoard(this.boardId);
+          }
         })
       )
       .subscribe();

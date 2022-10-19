@@ -22,7 +22,11 @@ export class SocketService {
 
   disconnect(): void {
     if (!this.socket) throw new Error('Socket connection is not established');
-
     this.socket.disconnect();
+  }
+
+  emit(eventName: string, message: any): void {
+    if (!this.socket) throw new Error('Socket connection is not established');
+    this.socket.emit(eventName, message);
   }
 }
