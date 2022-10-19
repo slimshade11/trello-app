@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthFacade } from '@auth/auth.facade';
@@ -8,6 +9,8 @@ import { AuthFacade } from '@auth/auth.facade';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  isAuthLoading$: Observable<boolean> = this.authFacade.getIsAuthLoading$();
+
   constructor(private authFacade: AuthFacade, private router: Router) {}
 
   ngOnInit(): void {

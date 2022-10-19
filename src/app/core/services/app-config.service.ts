@@ -9,4 +9,5 @@ export const APP_SERVICE_CONFIG: InjectionToken<AppConfig> =
 export const APP_CONFIG: AppConfig = {
   BASE_URL: environment.baseUrl,
   TOKEN: Config.TOKEN,
+  SOCKET_URL: environment.socketUrl,
 };
