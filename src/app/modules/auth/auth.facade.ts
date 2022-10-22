@@ -43,6 +43,7 @@ export class AuthFacade {
     return this.authApi.register$(registerPayload).pipe(
       tap((currentUser: CurrentUser): void => {
         this.authService.setToken(currentUser);
+        this.socketService.setupSocketConnection(currentUser);
         this.authState.setCurrentUser(currentUser);
       }),
       tap((): void => {
@@ -72,6 +73,7 @@ export class AuthFacade {
     return this.authApi.login$(loginPayload).pipe(
       tap((currentUser: CurrentUser) => {
         this.authService.setToken(currentUser);
+        this.socketService.setupSocketConnection(currentUser);
         this.authState.setCurrentUser(currentUser);
       }),
       tap((): void => {
