@@ -7,6 +7,10 @@ import { BoardsState } from '@boards/state/boards.state';
 import { SocketService } from '@services/socket.service';
 import { SocketEvents } from '@enums/socket-events.enum';
 import { ToastStatus } from '@enums/toast-status.enum';
+import { AuthFacade } from '@auth/auth.facade';
+import { ColumnsApi } from '@boards/api/columns.api';
+import { Column } from '@boards/interfaces/column.interface';
+import { ColumnsState } from '@boards/state/columns.state';
 import {
   Observable,
   tap,
@@ -18,7 +22,6 @@ import {
   take,
   filter,
 } from 'rxjs';
-import { AuthFacade } from '@auth/auth.facade';
 
 @Injectable()
 export class BoardsFacade {
@@ -27,7 +30,9 @@ export class BoardsFacade {
     private boardsState: BoardsState,
     private toastService: ToastService,
     private authFacade: AuthFacade,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private columnsApi: ColumnsApi,
+    private columnsState: ColumnsState
   ) {}
 
   loadBoards$(): Observable<Board[]> {
@@ -38,6 +43,15 @@ export class BoardsFacade {
         return throwError(err);
       }),
       finalize((): void => this.boardsState.setIsBoardsLoading(false))
+    );
+  }
+
+  loadColumns$(boardId: string): Observable<Column[]> {
+    return this.columnsApi.loadColumns$(boardId).pipe(
+      tap((columns: Column[]): void => this.columnsState.setColumns(columns)),
+      catchError((err: HttpErrorResponse): Observable<never> => {
+        return throwError(err);
+      })
     );
   }
 
@@ -101,5 +115,9 @@ export class BoardsFacade {
 
   getBoardDetails$(): Observable<Board | null> {
     return this.boardsState.getBoardDetails$();
+  }
+
+  getColumns$(): Observable<Column[]> {
+    return this.columnsState.getColumns$();
   }
 }
