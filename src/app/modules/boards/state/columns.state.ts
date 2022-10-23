@@ -15,4 +15,9 @@ export class ColumnsState {
   getColumns$(): Observable<Column[]> {
     return this.columns$.asObservable();
   }
+
+  addColumn(column: Column): void {
+    const updatedColumns: Column[] = [...this.columns$.getValue(), column];
+    this.columns$.next(updatedColumns);
+  }
 }

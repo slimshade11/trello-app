@@ -1,12 +1,21 @@
 <app-top-bar></app-top-bar>
 
-<div class="board" *ngIf="data$ | async as data">
+<div class="board" *ngIf="boardData$ | async as data">
   <div class="board-header-container">INLINE FORM BOARD</div>
 
   <div class="columns">
-    <div class="column" *ngFor="let form of data.columns">
-      <div class="column-title">INLINE FORM FOR UPDATING COLUMN</div>
+    <div class="column" *ngFor="let column of data.columns">
+      <div class="column-title">{{ column.title }}</div>
     </div>
-    INLINE FORM FOR CREATING COLUMN
+    <div class="p-4 bg-blue-300">
+      <app-inline-form
+        (handleSubmit)="createColumn($event)"
+        [hasButton]="true"
+        defaultText="Add a list"
+        buttonText="Add list"
+        inputPlaceholder="Add column name"
+      >
+      </app-inline-form>
+    </div>
   </div>
 </div>

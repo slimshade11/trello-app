@@ -4,6 +4,7 @@ import { AppConfig } from '@interfaces/app-config.interface';
 import { APP_SERVICE_CONFIG } from '@services/app-config.service';
 import { Observable } from 'rxjs';
 import { Column } from '@boards/interfaces/column.interface';
+import { CreateColumnPayload } from '@boards/interfaces/create-column-payload.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -19,4 +20,8 @@ export class ColumnsApi {
       `${this.appConfig.BASE_URL}/boards/${boardId}/columns`
     );
   }
+
+  // createColumn$(column: CreateColumnPayload): Observable<any> {
+  // return this.http.post();
+  // }
 }

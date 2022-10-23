@@ -11,6 +11,7 @@ import { AuthFacade } from '@auth/auth.facade';
 import { ColumnsApi } from '@boards/api/columns.api';
 import { Column } from '@boards/interfaces/column.interface';
 import { ColumnsState } from '@boards/state/columns.state';
+import { CreateColumnPayload } from '@boards/interfaces/create-column-payload.interface';
 import {
   Observable,
   tap,
@@ -94,6 +95,16 @@ export class BoardsFacade {
         );
       })
     );
+  }
+
+  createColumn$(column: CreateColumnPayload) {
+    this.socketService.emit(SocketEvents.COLUMNS_CREATE, column);
+  }
+
+  listenToSocketCreateColumnSuccess$(): Observable<Column> {
+    return this.socketService
+      .listen<Column>(SocketEvents.COLUMNS_CREATE_SUCCESS)
+      .pipe(tap((column: Column): void => this.columnsState.addColumn(column)));
   }
 
   leaveBoard(boardId: string): void {

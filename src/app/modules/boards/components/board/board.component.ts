@@ -3,27 +3,15 @@ import { Board } from '@boards/interfaces/board.interface';
 import { Column } from '@boards/interfaces/column.interface';
 import { DestroyComponent } from '@standalone/components/destroy/destroy.component';
 import { Component, OnInit } from '@angular/core';
+import { CreateColumnPayload } from '@boards/interfaces/create-column-payload.interface';
+import { BoardData } from '@boards/interfaces/board-data.interface';
+import { take, Observable, tap, combineLatest, map, takeUntil } from 'rxjs';
 import {
   ActivatedRoute,
   NavigationStart,
   Params,
   Router,
 } from '@angular/router';
-import {
-  switchMap,
-  take,
-  Observable,
-  tap,
-  combineLatest,
-  map,
-  takeUntil,
-} from 'rxjs';
-
-interface BoardData {
-  boardDetails: Board | null;
-  columns: Column[];
-  isDataLoading: boolean;
-}
 
 @Component({
   selector: 'app-board',
@@ -32,7 +20,7 @@ interface BoardData {
 })
 export class BoardComponent extends DestroyComponent implements OnInit {
   boardDetails$!: Observable<Board | null>;
-  data$!: Observable<BoardData>;
+  boardData$!: Observable<BoardData>;
 
   boardId!: string;
 
@@ -45,39 +33,13 @@ export class BoardComponent extends DestroyComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadBoardById();
+    this.loadData();
     this.initializeListeners();
     this.initializeData();
   }
 
-  loadBoardById(): void {
-    this.activatedRoute.params
-      .pipe(
-        take(1),
-        switchMap((params: Params): Observable<Board> => {
-          this.boardId = params['id'];
-
-          return this.boardsFacade.loadBoardById$(this.boardId);
-        })
-      )
-      .subscribe();
-  }
-
-  initializeListeners(): void {
-    this.router.events
-      .pipe(
-        tap((event: any): void => {
-          if (event instanceof NavigationStart) {
-            console.log('leaving a page');
-            this.boardsFacade.leaveBoard(this.boardId);
-          }
-        })
-      )
-      .subscribe();
-  }
-
   initializeData(): void {
-    this.data$ = combineLatest([
+    this.boardData$ = combineLatest([
       this.boardsFacade.getBoardDetails$(),
       this.boardsFacade.getColumns$(),
       this.boardsFacade.getIsBoardsLoading$(),
@@ -87,13 +49,58 @@ export class BoardComponent extends DestroyComponent implements OnInit {
           Board | null,
           Column[],
           boolean
-        ]): BoardData => ({
-          boardDetails,
-          columns,
-          isDataLoading,
-        })
+        ]): BoardData => {
+          return {
+            boardDetails,
+            columns,
+            isDataLoading,
+          };
+        }
       ),
       takeUntil(this.destroy$)
     );
+  }
+
+  loadData(): void {
+    this.activatedRoute.params.pipe(take(1)).subscribe({
+      next: (params: Params): void => (this.boardId = params['id']),
+    });
+
+    this.boardsFacade
+      .loadBoardById$(this.boardId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+
+    this.boardsFacade
+      .loadColumns$(this.boardId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+  }
+
+  initializeListeners(): void {
+    this.router.events
+      .pipe(
+        tap((event: any): void => {
+          if (event instanceof NavigationStart) {
+            this.boardsFacade.leaveBoard(this.boardId);
+          }
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe();
+
+    this.boardsFacade
+      .listenToSocketCreateColumnSuccess$()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+  }
+
+  createColumn(title: string): void {
+    const column: CreateColumnPayload = {
+      title,
+      boardId: this.boardId,
+    };
+
+    this.boardsFacade.createColumn$(column);
   }
 }
