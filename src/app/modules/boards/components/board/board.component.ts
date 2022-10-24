@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
 import { CreateColumnPayload } from '@boards/interfaces/create-column-payload.interface';
 import { BoardData } from '@boards/interfaces/board-data.interface';
 import { take, Observable, tap, combineLatest, map, takeUntil } from 'rxjs';
+import { TaskCustom } from '@boards/interfaces/task-custom.interface';
+import { CreateTaskPayload } from '@boards/interfaces/create-task-payload.interface';
 import {
   ActivatedRoute,
   NavigationStart,
@@ -43,17 +45,20 @@ export class BoardComponent extends DestroyComponent implements OnInit {
       this.boardsFacade.getBoardDetails$(),
       this.boardsFacade.getColumns$(),
       this.boardsFacade.getIsBoardsLoading$(),
+      this.boardsFacade.getTasks$(),
     ]).pipe(
       map(
-        ([boardDetails, columns, isDataLoading]: [
+        ([boardDetails, columns, isDataLoading, tasks]: [
           Board | null,
           Column[],
-          boolean
+          boolean,
+          TaskCustom[]
         ]): BoardData => {
           return {
             boardDetails,
             columns,
             isDataLoading,
+            tasks,
           };
         }
       ),
@@ -75,6 +80,11 @@ export class BoardComponent extends DestroyComponent implements OnInit {
       .loadColumns$(this.boardId)
       .pipe(takeUntil(this.destroy$))
       .subscribe();
+
+    this.boardsFacade
+      .loadTasks$(this.boardId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
   initializeListeners(): void {
@@ -93,14 +103,29 @@ export class BoardComponent extends DestroyComponent implements OnInit {
       .listenToSocketCreateColumnSuccess$()
       .pipe(takeUntil(this.destroy$))
       .subscribe();
+
+    this.boardsFacade
+      .listenToSocketCreateTaskSuccess$()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
   createColumn(title: string): void {
-    const column: CreateColumnPayload = {
+    const newColumn: CreateColumnPayload = {
       title,
       boardId: this.boardId,
     };
 
-    this.boardsFacade.createColumn$(column);
+    this.boardsFacade.createColumn$(newColumn);
+  }
+
+  createTask(title: string, columnId: string): void {
+    const newTask: CreateTaskPayload = {
+      title,
+      columnId,
+      boardId: this.boardId,
+    };
+
+    this.boardsFacade.createTask$(newTask);
   }
 }

@@ -3,18 +3,17 @@ import { Inject, Injectable } from '@angular/core';
 import { AppConfig } from '@interfaces/app-config.interface';
 import { APP_SERVICE_CONFIG } from '@services/app-config.service';
 import { Observable } from 'rxjs';
-import { Column } from '@boards/interfaces/column.interface';
+import { TaskCustom } from '@boards/interfaces/task-custom.interface';
 
 @Injectable()
-export class ColumnsApi {
+export class TasksApi {
   constructor(
     @Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig,
     private http: HttpClient
   ) {}
 
-  loadColumns$(boardId: string): Observable<Column[]> {
-    return this.http.get<Column[]>(
-      `${this.appConfig.BASE_URL}/boards/${boardId}/columns`
-    );
+  getTasks$(boardId: string): Observable<TaskCustom[]> {
+    const endpoint: string = `${this.appConfig.BASE_URL}/boards/${boardId}/tasks`;
+    return this.http.get<TaskCustom[]>(endpoint);
   }
 }

@@ -1,3 +1,4 @@
+import { CreateTaskPayload } from '@boards/interfaces/create-task-payload.interface';
 import { ToastService } from '@services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Board } from '@boards/interfaces/board.interface';
@@ -12,6 +13,9 @@ import { ColumnsApi } from '@boards/api/columns.api';
 import { Column } from '@boards/interfaces/column.interface';
 import { ColumnsState } from '@boards/state/columns.state';
 import { CreateColumnPayload } from '@boards/interfaces/create-column-payload.interface';
+import { TasksState } from '@boards/state/tasks.state';
+import { TasksApi } from '@boards/api/tasks.api';
+import { TaskCustom } from '@boards/interfaces/task-custom.interface';
 import {
   Observable,
   tap,
@@ -33,7 +37,9 @@ export class BoardsFacade {
     private authFacade: AuthFacade,
     private socketService: SocketService,
     private columnsApi: ColumnsApi,
-    private columnsState: ColumnsState
+    private columnsState: ColumnsState,
+    private tasksState: TasksState,
+    private tasksApi: TasksApi
   ) {}
 
   loadBoards$(): Observable<Board[]> {
@@ -51,6 +57,25 @@ export class BoardsFacade {
     return this.columnsApi.loadColumns$(boardId).pipe(
       tap((columns: Column[]): void => this.columnsState.setColumns(columns)),
       catchError((err: HttpErrorResponse): Observable<never> => {
+        this.toastService.showInfoMessage(
+          ToastStatus.ERROR,
+          'Error!',
+          'Something went wrong'
+        );
+        return throwError(err);
+      })
+    );
+  }
+
+  loadTasks$(boardId: string): Observable<TaskCustom[]> {
+    return this.tasksApi.getTasks$(boardId).pipe(
+      tap((tasks: TaskCustom[]) => this.tasksState.setTasks(tasks)),
+      catchError((err: HttpErrorResponse): Observable<never> => {
+        this.toastService.showInfoMessage(
+          ToastStatus.ERROR,
+          'Error!',
+          'Something went wrong'
+        );
         return throwError(err);
       })
     );
@@ -97,14 +122,24 @@ export class BoardsFacade {
     );
   }
 
-  createColumn$(column: CreateColumnPayload) {
+  createColumn$(column: CreateColumnPayload): void {
     this.socketService.emit(SocketEvents.COLUMNS_CREATE, column);
+  }
+
+  createTask$(task: CreateTaskPayload): void {
+    this.socketService.emit(SocketEvents.TASKS_CREATE, task);
   }
 
   listenToSocketCreateColumnSuccess$(): Observable<Column> {
     return this.socketService
       .listen<Column>(SocketEvents.COLUMNS_CREATE_SUCCESS)
       .pipe(tap((column: Column): void => this.columnsState.addColumn(column)));
+  }
+
+  listenToSocketCreateTaskSuccess$(): Observable<TaskCustom> {
+    return this.socketService
+      .listen<TaskCustom>(SocketEvents.TASKS_CREATE_SUCCESS)
+      .pipe(tap((task: TaskCustom): void => this.tasksState.addTask(task)));
   }
 
   leaveBoard(boardId: string): void {
@@ -130,5 +165,9 @@ export class BoardsFacade {
 
   getColumns$(): Observable<Column[]> {
     return this.columnsState.getColumns$();
+  }
+
+  getTasks$(): Observable<TaskCustom[]> {
+    return this.tasksState.getTasks$();
   }
 }

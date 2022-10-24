@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Column } from '@boards/interfaces/column.interface';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ColumnsState {
   columns$: BehaviorSubject<Column[]> = new BehaviorSubject<Column[]>([]);
 
