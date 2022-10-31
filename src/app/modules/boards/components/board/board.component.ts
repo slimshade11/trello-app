@@ -4,10 +4,18 @@ import { Column } from '@boards/interfaces/column.interface';
 import { DestroyComponent } from '@standalone/components/destroy/destroy.component';
 import { Component, OnInit } from '@angular/core';
 import { CreateColumnPayload } from '@boards/interfaces/create-column-payload.interface';
-import { BoardData } from '@boards/interfaces/board-data.interface';
-import { take, Observable, tap, combineLatest, map, takeUntil } from 'rxjs';
 import { TaskCustom } from '@boards/interfaces/task-custom.interface';
 import { CreateTaskPayload } from '@boards/interfaces/create-task-payload.interface';
+import { BoardData } from '@boards/interfaces/board-data.interface';
+import {
+  take,
+  Observable,
+  tap,
+  combineLatest,
+  map,
+  takeUntil,
+  skipWhile,
+} from 'rxjs';
 import {
   ActivatedRoute,
   NavigationStart,
@@ -62,6 +70,7 @@ export class BoardComponent extends DestroyComponent implements OnInit {
           };
         }
       ),
+      skipWhile(({ boardDetails }: BoardData) => boardDetails === null),
       takeUntil(this.destroy$)
     );
   }
@@ -113,6 +122,11 @@ export class BoardComponent extends DestroyComponent implements OnInit {
       .listenToUpdateBoardName$()
       .pipe(takeUntil(this.destroy$))
       .subscribe();
+
+    this.boardsFacade
+      .listenToDeleteBoardById$()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
   createColumn(title: string): void {
@@ -136,5 +150,11 @@ export class BoardComponent extends DestroyComponent implements OnInit {
 
   updateBoardName(boardName: string): void {
     this.boardsFacade.updateBoardName(this.boardId, { title: boardName });
+  }
+
+  deleteBoard(): void {
+    if (confirm('Are you sure you want to delete the board?')) {
+      this.boardsFacade.deleteBoard(this.boardId);
+    }
   }
 }

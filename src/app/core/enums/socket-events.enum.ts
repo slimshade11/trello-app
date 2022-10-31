@@ -6,6 +6,10 @@ export enum SocketEvents {
   BORADS_UPDATE_SUCCESS = 'boards:updateSuccess',
   BORADS_UPDATE_FAILURE = 'boards:updateFailure',
 
+  BORADS_DELETE = 'boards:delete',
+  BORADS_DELETE_SUCCESS = 'boards:deleteSuccess',
+  BORADS_DELETE_FAILURE = 'boards:deleteFailure',
+
   COLUMNS_CREATE = 'columns:create',
   COLUMNS_CREATE_SUCCESS = 'columns:createSuccess',
   COLUMNS_CREATE_FAILURE = 'columns:createFailure',

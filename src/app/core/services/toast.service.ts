@@ -7,7 +7,7 @@ import { MessageService } from 'primeng/api';
 export class ToastService {
   constructor(private messageService: MessageService) {}
 
-  showInfoMessage(severity: string, summary: string, detail: string): void {
+  showInfoMessage(severity: string, summary: string, detail?: string): void {
     this.messageService.clear();
     this.messageService.add({
       severity,

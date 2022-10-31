@@ -27,6 +27,7 @@ import {
   take,
   filter,
 } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class BoardsFacade {
@@ -39,7 +40,8 @@ export class BoardsFacade {
     private columnsApi: ColumnsApi,
     private columnsState: ColumnsState,
     private tasksState: TasksState,
-    private tasksApi: TasksApi
+    private tasksApi: TasksApi,
+    private router: Router
   ) {}
 
   loadBoards$(): Observable<Board[]> {
@@ -126,6 +128,10 @@ export class BoardsFacade {
     this.boardsApi.updateBoard(boardId, fields);
   }
 
+  deleteBoard(boardId: string): void {
+    this.boardsApi.deleteBoard(boardId);
+  }
+
   createColumn$(column: CreateColumnPayload): void {
     this.socketService.emit(SocketEvents.COLUMNS_CREATE, column);
   }
@@ -151,6 +157,20 @@ export class BoardsFacade {
       .listen<Board>(SocketEvents.BORADS_UPDATE_SUCCESS)
       .pipe(
         tap((updateBoard): void => this.boardsState.updateBoard(updateBoard))
+      );
+  }
+
+  listenToDeleteBoardById$(): Observable<void> {
+    return this.socketService
+      .listen<void>(SocketEvents.BORADS_DELETE_SUCCESS)
+      .pipe(
+        tap((): void => {
+          this.router.navigateByUrl('/');
+          this.toastService.showInfoMessage(
+            ToastStatus.INFO,
+            'Board has been successfully deleted'
+          );
+        })
       );
   }
 

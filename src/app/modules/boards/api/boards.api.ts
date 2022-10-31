@@ -32,4 +32,8 @@ export class BoardsApi {
   updateBoard(boardId: string, fields: { title: string }): void {
     this.socketService.emit(SocketEvents.BORADS_UPDATE, { boardId, fields });
   }
+
+  deleteBoard(boardId: string): void {
+    this.socketService.emit(SocketEvents.BORADS_DELETE, { boardId });
+  }
 }
