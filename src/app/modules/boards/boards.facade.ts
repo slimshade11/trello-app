@@ -89,7 +89,7 @@ export class BoardsFacade {
     this.boardsState.setIsBoardsLoading(true);
     return this.boardsApi.loadBoardById(boardId).pipe(
       filter((board): boolean => !!board),
-      tap((board: Board) => this.boardsState.setBoardDetails(board)),
+      tap((board: Board): void => this.boardsState.setBoardDetails(board)),
       catchError((err: HttpErrorResponse): Observable<never> => {
         this.toastService.showInfoMessage(
           ToastStatus.ERROR,
@@ -98,11 +98,11 @@ export class BoardsFacade {
         );
         return throwError(err);
       }),
-      finalize(() => this.boardsState.setIsBoardsLoading(false))
+      finalize((): void => this.boardsState.setIsBoardsLoading(false))
     );
   }
 
-  createBoard$(title: string): Observable<any> {
+  createBoard$(title: string): Observable<Board[]> {
     return this.boardsApi.createBoard$(title).pipe(
       switchMap((createdBoard: Board): Observable<Board[]> => {
         return this.getBoards$().pipe(
@@ -128,6 +128,18 @@ export class BoardsFacade {
     this.socketService.emit(SocketEvents.COLUMNS_DELETE, { boardId, columnId });
 
     this.columnsState.deleteColumn(columnId);
+  }
+
+  updateColumnName(
+    boardId: string,
+    columnId: string,
+    fields: { title: string }
+  ): void {
+    this.socketService.emit(SocketEvents.COLUMNS_UPDATE, {
+      boardId,
+      columnId,
+      fields,
+    });
   }
 
   updateBoardName(boardId: string, fields: { title: string }): void {
@@ -162,7 +174,9 @@ export class BoardsFacade {
     return this.socketService
       .listen<Board>(SocketEvents.BORADS_UPDATE_SUCCESS)
       .pipe(
-        tap((updateBoard): void => this.boardsState.updateBoard(updateBoard))
+        tap((updatedBoard: Board): void =>
+          this.boardsState.updateBoard(updatedBoard)
+        )
       );
   }
 
@@ -176,6 +190,16 @@ export class BoardsFacade {
             ToastStatus.INFO,
             'Board has been successfully deleted'
           );
+        })
+      );
+  }
+
+  listenToUpdateColumn$(): Observable<Column> {
+    return this.socketService
+      .listen<Column>(SocketEvents.COLUMNS_UPDATE_SUCCESS)
+      .pipe(
+        tap((column: Column): void => {
+          this.columnsState.updateColumn(column);
         })
       );
   }

@@ -18,6 +18,10 @@ export enum SocketEvents {
   COLUMNS_CREATE_SUCCESS = 'columns:createSuccess',
   COLUMNS_CREATE_FAILURE = 'columns:createFailure',
 
+  COLUMNS_UPDATE = 'columns:update',
+  COLUMNS_UPDATE_SUCCESS = 'columns:updateSuccess',
+  COLUMNS_UPDATE_FAILURE = 'columns:updateFailure',
+
   TASKS_CREATE = 'tasks:create',
   TASKS_CREATE_SUCCESS = 'tasks:createSuccess',
   TASKS_CREATE_FAILURE = 'tasks:createFailure',
