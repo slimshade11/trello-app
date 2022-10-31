@@ -31,8 +31,6 @@
   display: flex;
   padding: 6px 8px;
   width: 100%;
-  background-color: #e4f0f6;
-  color: #0079bf;
   border-radius: 4px;
   margin-bottom: 5px;
 }
@@ -75,8 +73,6 @@
 .board-tile {
   width: 23%;
   margin: 0 2% 2% 0;
-  background: #00adcc;
-  color: #fff;
   line-height: 20px;
   padding: 8px;
   position: relative;
@@ -98,5 +94,4 @@
   max-height: 40px;
   width: 100%;
   word-wrap: break-word;
-  color: #fff;
 }

@@ -3,6 +3,7 @@
 <div class="board" *ngIf="boardData$ | async as data">
   <div class="board-header-container">
     <app-inline-form
+      *ngIf="data.boardDetails?.title"
       (handleSubmit)="updateBoardName($event)"
       [defaultText]="data.boardDetails!.title"
       [title]="data.boardDetails!.title"
@@ -26,6 +27,7 @@
       </div>
       <div
         *ngFor="let task of data.tasks | getTasksByColumnId: column.id"
+        (click)="openTask(task.id)"
         class="task"
       >
         {{ task.title }}
@@ -39,7 +41,7 @@
         class="create-task-form"
       ></app-inline-form>
     </div>
-    <div class="p-4 bg-blue-300">
+    <div class="p-4">
       <app-inline-form
         (handleSubmit)="createColumn($event)"
         [hasButton]="true"
@@ -51,3 +53,5 @@
     </div>
   </div>
 </div>
+
+<router-outlet></router-outlet>

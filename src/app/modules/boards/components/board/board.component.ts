@@ -7,6 +7,8 @@ import { CreateColumnPayload } from '@boards/interfaces/create-column-payload.in
 import { TaskCustom } from '@boards/interfaces/task-custom.interface';
 import { CreateTaskPayload } from '@boards/interfaces/create-task-payload.interface';
 import { BoardData } from '@boards/interfaces/board-data.interface';
+import { DialogService } from 'primeng/dynamicdialog';
+import { TaskModalComponent } from '@boards/dialogs/task-modal/task-modal.component';
 import {
   take,
   Observable,
@@ -37,7 +39,8 @@ export class BoardComponent extends DestroyComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private boardsFacade: BoardsFacade,
-    private router: Router
+    private router: Router,
+    private dialogService: DialogService
   ) {
     super();
   }
@@ -176,5 +179,17 @@ export class BoardComponent extends DestroyComponent implements OnInit {
 
   deleteColumn(columnId: string): void {
     this.boardsFacade.deleteColumn(this.boardId, columnId);
+  }
+
+  openTask(taskId: string): void {
+    const taskModalPayload = {
+      taskId,
+    };
+
+    this.dialogService.open(TaskModalComponent, {
+      header: '',
+      style: { width: '90%', maxWidth: '400px' },
+      data: taskModalPayload,
+    });
   }
 }

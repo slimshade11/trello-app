@@ -13,6 +13,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @NgModule({
   declarations: [MenubarComponent, InlineFormComponent, TopBarComponent],
@@ -26,6 +27,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     MenubarModule,
     ReactiveFormsModule,
     InputTextareaModule,
+    DynamicDialogModule,
   ],
   exports: [
     InputTextModule,
@@ -38,6 +40,7 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     InputTextareaModule,
     InlineFormComponent,
     TopBarComponent,
+    DynamicDialogModule,
   ],
 })
 export class SharedModule {}

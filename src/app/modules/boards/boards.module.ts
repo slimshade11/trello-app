@@ -13,9 +13,11 @@ import { ColumnsState } from '@boards/state/columns.state';
 import { TasksState } from '@boards/state/tasks.state';
 import { GetTasksByColumnIdPipe } from './pipes/get-tasks-by-column-id.pipe';
 import { BoardService } from '@boards/services/board.service';
+import { DialogService } from 'primeng/dynamicdialog';
+import { TaskModalComponent } from './dialogs/task-modal/task-modal.component';
 
 @NgModule({
-  declarations: [BoardsComponent, BoardComponent, GetTasksByColumnIdPipe],
+  declarations: [BoardsComponent, BoardComponent, GetTasksByColumnIdPipe, TaskModalComponent],
   imports: [CommonModule, BoardsRoutingModule, SharedModule],
   providers: [
     BoardsFacade,
@@ -26,6 +28,7 @@ import { BoardService } from '@boards/services/board.service';
     ColumnsState,
     TasksState,
     BoardService,
+    DialogService,
   ],
 })
 export class BoardsModule {}
