@@ -16,6 +16,7 @@ import { CreateColumnPayload } from '@boards/interfaces/create-column-payload.in
 import { TasksState } from '@boards/state/tasks.state';
 import { TasksApi } from '@boards/api/tasks.api';
 import { TaskCustom } from '@boards/interfaces/task-custom.interface';
+import { Router } from '@angular/router';
 import {
   Observable,
   tap,
@@ -27,7 +28,6 @@ import {
   take,
   filter,
 } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class BoardsFacade {
@@ -124,6 +124,12 @@ export class BoardsFacade {
     );
   }
 
+  deleteColumn(boardId: string, columnId: string): void {
+    this.socketService.emit(SocketEvents.COLUMNS_DELETE, { boardId, columnId });
+
+    this.columnsState.deleteColumn(columnId);
+  }
+
   updateBoardName(boardId: string, fields: { title: string }): void {
     this.boardsApi.updateBoard(boardId, fields);
   }
@@ -172,6 +178,12 @@ export class BoardsFacade {
           );
         })
       );
+  }
+
+  listenToDeleteColumnById$(): Observable<Column> {
+    return this.socketService
+      .listen<Column>(SocketEvents.COLUMNS_DELETE_SUCCESS)
+      .pipe(tap(({ id }: Column) => this.columnsState.deleteColumn(id)));
   }
 
   leaveBoard(boardId: string): void {

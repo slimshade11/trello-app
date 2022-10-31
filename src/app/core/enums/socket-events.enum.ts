@@ -10,6 +10,10 @@ export enum SocketEvents {
   BORADS_DELETE_SUCCESS = 'boards:deleteSuccess',
   BORADS_DELETE_FAILURE = 'boards:deleteFailure',
 
+  COLUMNS_DELETE = 'columns:delete',
+  COLUMNS_DELETE_SUCCESS = 'columns:deleteSuccess',
+  COLUMNS_DELETE_FAILURE = 'columns:deleteFailure',
+
   COLUMNS_CREATE = 'columns:create',
   COLUMNS_CREATE_SUCCESS = 'columns:createSuccess',
   COLUMNS_CREATE_FAILURE = 'columns:createFailure',

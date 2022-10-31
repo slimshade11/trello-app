@@ -127,6 +127,11 @@ export class BoardComponent extends DestroyComponent implements OnInit {
       .listenToDeleteBoardById$()
       .pipe(takeUntil(this.destroy$))
       .subscribe();
+
+    this.boardsFacade
+      .listenToDeleteColumnById$()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
   createColumn(title: string): void {
@@ -156,5 +161,9 @@ export class BoardComponent extends DestroyComponent implements OnInit {
     if (confirm('Are you sure you want to delete the board?')) {
       this.boardsFacade.deleteBoard(this.boardId);
     }
+  }
+
+  deleteColumn(columnId: string): void {
+    this.boardsFacade.deleteColumn(this.boardId, columnId);
   }
 }

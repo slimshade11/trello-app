@@ -1,3 +1,4 @@
+import { SocketService } from '@services/socket.service';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Column } from '@boards/interfaces/column.interface';
@@ -17,5 +18,13 @@ export class ColumnsState {
   addColumn(column: Column): void {
     const updatedColumns: Column[] = [...this.columns$.getValue(), column];
     this.columns$.next(updatedColumns);
+  }
+
+  deleteColumn(columnId: string): void {
+    const updatedColumns: Column[] = this.columns$
+      .getValue()
+      .filter(({ id }: Column) => id !== columnId);
+
+    this.setColumns(updatedColumns);
   }
 }
