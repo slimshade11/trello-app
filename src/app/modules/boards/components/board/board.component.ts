@@ -108,6 +108,11 @@ export class BoardComponent extends DestroyComponent implements OnInit {
       .listenToSocketCreateTaskSuccess$()
       .pipe(takeUntil(this.destroy$))
       .subscribe();
+
+    this.boardsFacade
+      .listenToUpdateBoardName$()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
   createColumn(title: string): void {
@@ -127,5 +132,9 @@ export class BoardComponent extends DestroyComponent implements OnInit {
     };
 
     this.boardsFacade.createTask$(newTask);
+  }
+
+  updateBoardName(boardName: string): void {
+    this.boardsFacade.updateBoardName(this.boardId, { title: boardName });
   }
 }

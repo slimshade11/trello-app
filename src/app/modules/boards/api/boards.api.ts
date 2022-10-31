@@ -4,12 +4,15 @@ import { Inject, Injectable } from '@angular/core';
 import { APP_SERVICE_CONFIG } from '@services/app-config.service';
 import { AppConfig } from '@interfaces/app-config.interface';
 import { Board } from '@boards/interfaces/board.interface';
+import { SocketService } from '@services/socket.service';
+import { SocketEvents } from '@enums/socket-events.enum';
 
 @Injectable()
 export class BoardsApi {
   constructor(
     @Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig,
-    private http: HttpClient
+    private http: HttpClient,
+    private socketService: SocketService
   ) {}
 
   loadBoards$(): Observable<Board[]> {
@@ -24,5 +27,9 @@ export class BoardsApi {
     return this.http.post<Board>(`${this.appConfig.BASE_URL}/boards`, {
       title,
     });
+  }
+
+  updateBoard(boardId: string, fields: { title: string }): void {
+    this.socketService.emit(SocketEvents.BORADS_UPDATE, { boardId, fields });
   }
 }

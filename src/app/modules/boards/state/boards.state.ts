@@ -34,4 +34,14 @@ export class BoardsState {
   getIsBoardsLoading$(): Observable<boolean> {
     return this.isBoardsLoading$.asObservable();
   }
+
+  updateBoard(updatedBoard: Board): void {
+    const boardDetails = this.boardDetails$.getValue();
+
+    if (!boardDetails) {
+      throw new Error('Board is not initialized');
+    }
+
+    this.setBoardDetails({ ...boardDetails, title: updatedBoard.title });
+  }
 }

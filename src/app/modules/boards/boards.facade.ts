@@ -122,6 +122,10 @@ export class BoardsFacade {
     );
   }
 
+  updateBoardName(boardId: string, fields: { title: string }): void {
+    this.boardsApi.updateBoard(boardId, fields);
+  }
+
   createColumn$(column: CreateColumnPayload): void {
     this.socketService.emit(SocketEvents.COLUMNS_CREATE, column);
   }
@@ -140,6 +144,14 @@ export class BoardsFacade {
     return this.socketService
       .listen<TaskCustom>(SocketEvents.TASKS_CREATE_SUCCESS)
       .pipe(tap((task: TaskCustom): void => this.tasksState.addTask(task)));
+  }
+
+  listenToUpdateBoardName$(): Observable<Board> {
+    return this.socketService
+      .listen<Board>(SocketEvents.BORADS_UPDATE_SUCCESS)
+      .pipe(
+        tap((updateBoard): void => this.boardsState.updateBoard(updateBoard))
+      );
   }
 
   leaveBoard(boardId: string): void {

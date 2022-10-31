@@ -1,7 +1,14 @@
 <app-top-bar></app-top-bar>
 
 <div class="board" *ngIf="boardData$ | async as data">
-  <div class="board-header-container">INLINE FORM BOARD</div>
+  <div class="board-header-container">
+    <app-inline-form
+      (handleSubmit)="updateBoardName($event)"
+      [defaultText]="data.boardDetails!.title"
+      [title]="data.boardDetails!.title"
+      class="edit-board-form"
+    ></app-inline-form>
+  </div>
   <div class="columns">
     <div class="column" *ngFor="let column of data.columns">
       <div class="column-title">{{ column.title }}</div>
@@ -9,9 +16,8 @@
         *ngFor="let task of data.tasks | getTasksByColumnId: column.id"
         class="task"
       >
-        {{ task.title | json }}
+        {{ task.title }}
       </div>
-
       <app-inline-form
         (handleSubmit)="createTask($event, column.id)"
         [hasButton]="true"
