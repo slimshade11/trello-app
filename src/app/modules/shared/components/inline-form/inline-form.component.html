@@ -1,14 +1,13 @@
 <div
-  class="inline-form-container"
-  [class.inline-form-container-editing]="isEditing"
   (click)="activeEditing()"
+  [class.inline-form-container-editing]="isEditing"
+  class="inline-form-container"
 >
   <ng-container *ngIf="!isEditing; else editing">
-    <div class="inline-form-text">
+    <p-button styleClass="p-button-text">
       {{ defaultText }}
-    </div>
+    </p-button>
   </ng-container>
-
   <ng-template #editing>
     <form
       *ngIf="isEditing"
@@ -27,7 +26,6 @@
           <label for="title">{{ inputPlaceholder }}</label>
         </span>
       </ng-container>
-
       <ng-template #textarea>
         <textarea
           *ngSwitchCase="'textarea'"

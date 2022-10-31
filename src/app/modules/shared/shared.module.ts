@@ -14,6 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { MenubarModule } from 'primeng/menubar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [MenubarComponent, InlineFormComponent, TopBarComponent],
@@ -28,6 +29,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     ReactiveFormsModule,
     InputTextareaModule,
     DynamicDialogModule,
+    CardModule,
   ],
   exports: [
     InputTextModule,
@@ -41,6 +43,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     InlineFormComponent,
     TopBarComponent,
     DynamicDialogModule,
+    CardModule,
   ],
 })
 export class SharedModule {}

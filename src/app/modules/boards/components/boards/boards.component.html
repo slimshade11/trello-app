@@ -1,26 +1,9 @@
 <app-top-bar></app-top-bar>
 <div class="boards-page-container">
-  <div class="home-left-sidebar-container">
-    <a
-      routerLink="/boards"
-      class="boards-side-menu-option"
-      routerLinkActive="boards-side-menu-option-selected"
-    >
-      Boards
-    </a>
-    <a
-      routerLink="/"
-      class="boards-side-menu-option"
-      routerLinkActive="boards-side-menu-option-selected"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      Home
-    </a>
-  </div>
-  <div class="boards-section-container">
+  <div class="flex-grow-1 flex flex-column mt-5 mx-3">
     <div class="my-boards">
       <div class="my-boards-section-header">
-        <div class="boards-page-header-name">My boards</div>
+        <div class="boards-page-header-name text-4xl mb-5">My boards</div>
       </div>
       <div class="board-tile-list">
         <app-inline-form
@@ -33,9 +16,11 @@
           [routerLink]="['/boards', board.id]"
           class="board-tile"
         >
-          <div class="board-tile-details-name">
-            {{ board.title }}
-          </div>
+          <p-card>
+            <div class="board-tile-details-name">
+              {{ board.title }}
+            </div>
+          </p-card>
         </a>
       </div>
     </div>
