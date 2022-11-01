@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MenubarComponent } from '@shared/components/menubar/menubar.component';
 import { InlineFormComponent } from '@shared/components/inline-form/inline-form.component';
 import { TopBarComponent } from '@shared/components/top-bar/top-bar.component';
+import { ConfirmDialogComponent } from '@shared/dialogs/confirm-dialog/confirm-dialog.component';
 
 //Primeng modules
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,7 +18,12 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { CardModule } from 'primeng/card';
 
 @NgModule({
-  declarations: [MenubarComponent, InlineFormComponent, TopBarComponent],
+  declarations: [
+    MenubarComponent,
+    InlineFormComponent,
+    TopBarComponent,
+    ConfirmDialogComponent,
+  ],
   imports: [
     CommonModule,
     InputTextModule,
@@ -44,6 +50,7 @@ import { CardModule } from 'primeng/card';
     TopBarComponent,
     DynamicDialogModule,
     CardModule,
+    ConfirmDialogComponent,
   ],
 })
 export class SharedModule {}

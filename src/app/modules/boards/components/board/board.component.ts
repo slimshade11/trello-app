@@ -9,6 +9,7 @@ import { CreateTaskPayload } from '@boards/interfaces/create-task-payload.interf
 import { BoardData } from '@boards/interfaces/board-data.interface';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TaskModalComponent } from '@boards/dialogs/task-modal/task-modal.component';
+import { ConfirmDialogComponent } from '@shared/dialogs/confirm-dialog/confirm-dialog.component';
 import {
   take,
   Observable,
@@ -172,9 +173,17 @@ export class BoardComponent extends DestroyComponent implements OnInit {
   }
 
   deleteBoard(): void {
-    if (confirm('Are you sure you want to delete the board?')) {
-      this.boardsFacade.deleteBoard(this.boardId);
-    }
+    const dialogRef = this.dialogService.open(ConfirmDialogComponent, {
+      header: 'Are you sure you want to delete the board?',
+    });
+
+    dialogRef.onClose.subscribe({
+      next: (isDeleting: boolean): void => {
+        if (!isDeleting) return;
+
+        this.boardsFacade.deleteBoard(this.boardId);
+      },
+    });
   }
 
   deleteColumn(columnId: string): void {
