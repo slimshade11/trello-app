@@ -1,16 +1,19 @@
 <app-top-bar></app-top-bar>
-<div class="board" *ngIf="boardData$ | async as data">
-  <div class="flex align-items-center h-4rem px-3">
+<div *ngIf="boardData$ | async as data">
+  <div class="flex align-items-center justify-content-between h-4rem px-3">
     <app-inline-form
       *ngIf="data.boardDetails?.title"
       (handleSubmit)="updateBoardName($event)"
-      [defaultText]="data.boardDetails!.title"
+      [defaultText]="data.boardDetails!.title | uppercase"
       [title]="data.boardDetails!.title"
       class="edit-board-form"
     ></app-inline-form>
-    <p-button styleClass="p-button-danger" (click)="deleteBoard()"
-      >Delete board</p-button
+    <p-button
+      (onClick)="deleteBoard()"
+      styleClass="p-button-danger"
+      label="Delete board"
     >
+    </p-button>
   </div>
 
   <div class="p-4 flex justify-content-center">
@@ -23,15 +26,16 @@
     >
     </app-inline-form>
   </div>
-
-  <div class="flex gap-3">
-    <p-card *ngFor="let column of data.columns">
+  <div class="flex gap-3 flex-wrap">
+    <p-card
+      *ngFor="let column of data.columns"
+      styleClass="column border-round-xl"
+    >
       <div class="flex justify-content-between">
         <app-inline-form
           (handleSubmit)="updateColumnName($event, column.id)"
           [defaultText]="column.title"
           [title]="column.title"
-          class="edit-column-form"
         ></app-inline-form>
         <p-button
           (onClick)="deleteColumn(column.id)"
@@ -39,23 +43,24 @@
           styleClass="p-button-rounded p-button-text"
         ></p-button>
       </div>
-      <div
-        *ngFor="let task of data.tasks | getTasksByColumnId: column.id"
-        (click)="openTask(task.id, column.id)"
-        class="task"
-      >
-        {{ task.title }}
+      <ul>
+        <li
+          *ngFor="let task of data.tasks | getTasksByColumnId: column.id"
+          (click)="openTask(task.id, column.id)"
+          class="my-3 pointer"
+        >
+          {{ task.title }}
+        </li>
+      </ul>
+      <div class="mt-5">
+        <app-inline-form
+          (handleSubmit)="createTask($event, column.id)"
+          [hasButton]="true"
+          defaultText="Add a card"
+          inputPlaceholder="Enter a title for this card"
+          buttonText="Add card"
+        ></app-inline-form>
       </div>
-      <app-inline-form
-        (handleSubmit)="createTask($event, column.id)"
-        [hasButton]="true"
-        defaultText="Add a card"
-        inputPlaceholder="Enter a title for this card"
-        buttonText="Add card"
-        class="create-task-form"
-      ></app-inline-form>
     </p-card>
   </div>
 </div>
-
-<router-outlet></router-outlet>

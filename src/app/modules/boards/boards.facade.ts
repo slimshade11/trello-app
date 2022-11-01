@@ -203,6 +203,7 @@ export class BoardsFacade {
       .listen<Column>(SocketEvents.COLUMNS_UPDATE_SUCCESS)
       .pipe(
         tap((column: Column): void => {
+          console.log(column);
           this.columnsState.updateColumn(column);
         })
       );

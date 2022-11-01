@@ -35,11 +35,17 @@ export class InlineFormComponent {
   }
 
   onSubmit(): void {
+    console.log(this.form.value);
+
     if (this.form.value.title) {
       this.handleSubmit.emit(this.form.value.title);
     }
 
     this.isEditing = false;
     this.form.reset();
+  }
+
+  cancelEditing(): void {
+    this.isEditing = false;
   }
 }

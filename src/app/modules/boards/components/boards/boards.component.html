@@ -1,28 +1,27 @@
 <app-top-bar></app-top-bar>
-<div class="boards-page-container">
-  <div class="flex-grow-1 flex flex-column mt-5 mx-3">
-    <div class="my-boards">
-      <div class="my-boards-section-header">
-        <div class="font-bold text-5xl mb-5">My boards</div>
-      </div>
-      <div class="board-tile-list">
-        <app-inline-form
-          (handleSubmit)="createBoard($event)"
-          defaultText="Create new board"
-          class="create-board-form"
-        ></app-inline-form>
-        <a
-          *ngFor="let board of boards$ | async"
-          [routerLink]="['/boards', board.id]"
-          class="board-tile"
-        >
-          <p-card>
-            <div class="board-tile-details-name">
-              {{ board.title }}
-            </div>
-          </p-card>
-        </a>
-      </div>
+
+<div class="flex-grow-1 flex flex-column mt-5 mx-3">
+  <h1 class="font-bold text-5xl mb-5">My boards</h1>
+  <div class="flex">
+    <div class="w-12rem mr-3">
+      <app-inline-form
+        (handleSubmit)="createBoard($event)"
+        defaultText="Create new board"
+        class="mr-3"
+      ></app-inline-form>
+    </div>
+    <div class="flex gap-3 flex-wrap">
+      <a
+        *ngFor="let board of boards$ | async"
+        [routerLink]="['/boards', board.id]"
+        class="board border-round-xl"
+      >
+        <p-card styleClass="border-round-xl column">
+          <ng-template pTemplate="content">
+            <div class="text-center">{{ board.title }}</div>
+          </ng-template>
+        </p-card>
+      </a>
     </div>
   </div>
 </div>

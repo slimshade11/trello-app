@@ -1,3 +1,4 @@
+@use "index";
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;500;700&display=swap");
 
 $xs: 450px;
@@ -44,6 +45,19 @@ a {
   color: inherit;
 }
 
+ul {
+  list-style: none;
+}
+
 .h-screen-menu {
   min-height: calc(100vh - 64px) !important;
+}
+
+.board,
+.column {
+  transition-duration: 150ms;
+
+  &:hover {
+    box-shadow: 0 0 3px 5px rgba(255, 255, 255, 0.2);
+  }
 }

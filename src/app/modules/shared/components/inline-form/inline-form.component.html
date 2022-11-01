@@ -4,23 +4,26 @@
   class="inline-form-container"
 >
   <ng-container *ngIf="!isEditing; else editing">
-    <p-button styleClass="p-button-text">
-      {{ defaultText }}
-    </p-button>
+    <p-button
+      [label]="defaultText"
+      styleClass="p-button-text w-full"
+    ></p-button>
   </ng-container>
   <ng-template #editing>
     <form
       *ngIf="isEditing"
       (ngSubmit)="onSubmit()"
       (keyup.enter)="onSubmit()"
+      (keydown.escape)="cancelEditing()"
       [formGroup]="form"
       class="flex align-items-center"
     >
       <ng-container *ngIf="inputType === InputTypes.INPUT; else textarea">
-        <span class="p-float-label">
+        <span class="p-float-label w-full">
           <input
             [type]="inputType"
             formControlName="title"
+            class="w-full"
             id="title"
             pInputText
           />
@@ -32,16 +35,10 @@
           [autoResize]="true"
           [rows]="5"
           [cols]="30"
-          formControlName="title"
+          class="w-full"
           pInputTextarea
         ></textarea>
       </ng-template>
-
-      <p-button
-        styleClass="p-button-text p-button-secondary"
-        type="submit"
-        label="Save"
-      ></p-button>
     </form>
   </ng-template>
 </div>
