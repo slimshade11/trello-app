@@ -1,13 +1,16 @@
 <app-top-bar></app-top-bar>
-<div *ngIf="boardData$ | async as data">
+<div *ngIf="boardData$ | async as data" class="mt-5">
   <div class="flex align-items-center justify-content-between h-4rem px-3">
-    <app-inline-form
-      *ngIf="data.boardDetails?.title"
-      (handleSubmit)="updateBoardName($event)"
-      [defaultText]="data.boardDetails!.title | uppercase"
-      [title]="data.boardDetails!.title"
-      class="edit-board-form"
-    ></app-inline-form>
+    <div class="flex align-items-center">
+      <div class="mr-3">Board name:</div>
+      <app-inline-form
+        *ngIf="data.boardDetails?.title"
+        (handleSubmit)="updateBoardName($event)"
+        [defaultText]="data.boardDetails!.title | uppercase"
+        [title]="data.boardDetails!.title"
+        class="edit-board-form"
+      ></app-inline-form>
+    </div>
     <p-button
       (onClick)="deleteBoard()"
       styleClass="p-button-danger"
@@ -31,18 +34,18 @@
       *ngFor="let column of data.columns"
       styleClass="column border-round-xl"
     >
-      <div class="flex justify-content-between">
-        <app-inline-form
-          (handleSubmit)="updateColumnName($event, column.id)"
-          [defaultText]="column.title"
-          [title]="column.title"
-        ></app-inline-form>
+      <div class="flex justify-content-end">
         <p-button
           (onClick)="deleteColumn(column.id)"
-          icon="pi pi-delete-left"
+          icon="pi pi-times"
           styleClass="p-button-rounded p-button-text"
         ></p-button>
       </div>
+      <app-inline-form
+        (handleSubmit)="updateColumnName($event, column.id)"
+        [defaultText]="column.title | uppercase"
+        [title]="column.title"
+      ></app-inline-form>
       <ul>
         <li
           *ngFor="let task of data.tasks | getTasksByColumnId: column.id"

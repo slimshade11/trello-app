@@ -143,6 +143,11 @@ export class BoardComponent extends DestroyComponent implements OnInit {
       .listenToUpdateColumn$()
       .pipe(takeUntil(this.destroy$))
       .subscribe();
+
+    this.boardsFacade
+      .listenToSocketUpdateTask$()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
   createColumn(title: string): void {

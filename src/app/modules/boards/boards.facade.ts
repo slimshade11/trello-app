@@ -17,6 +17,7 @@ import { TasksState } from '@boards/state/tasks.state';
 import { TasksApi } from '@boards/api/tasks.api';
 import { TaskCustom } from '@boards/interfaces/task-custom.interface';
 import { Router } from '@angular/router';
+import { CurrentUser } from '@auth/interfaces/current-user.interface';
 import {
   Observable,
   tap,
@@ -146,6 +147,19 @@ export class BoardsFacade {
     });
   }
 
+  updateTask(
+    boardId: string,
+    taskId: string,
+    fields: { title?: string; description?: string; columnId?: string }
+  ): void {
+    console.log(fields);
+    this.socketService.emit(SocketEvents.TASKS_UPDATE, {
+      boardId,
+      taskId,
+      fields,
+    });
+  }
+
   updateBoardName(boardId: string, fields: { title: string }): void {
     this.boardsApi.updateBoard(boardId, fields);
   }
@@ -202,10 +216,19 @@ export class BoardsFacade {
     return this.socketService
       .listen<Column>(SocketEvents.COLUMNS_UPDATE_SUCCESS)
       .pipe(
-        tap((column: Column): void => {
-          console.log(column);
-          this.columnsState.updateColumn(column);
-        })
+        tap((updatedColumn: Column): void =>
+          this.columnsState.updateColumn(updatedColumn)
+        )
+      );
+  }
+
+  listenToSocketUpdateTask$(): Observable<TaskCustom> {
+    return this.socketService
+      .listen<TaskCustom>(SocketEvents.TASKS_UPDATE_SUCCESS)
+      .pipe(
+        tap((updatedTask: TaskCustom): void =>
+          this.tasksState.updateTasks(updatedTask)
+        )
       );
   }
 
@@ -251,5 +274,14 @@ export class BoardsFacade {
 
   getTasks$(): Observable<TaskCustom[]> {
     return this.tasksState.getTasks$();
+  }
+
+  getUsername$(): Observable<string> {
+    return this.authFacade.getCurrentUser$().pipe(
+      map(
+        (currentUser: CurrentUser | null | undefined) => currentUser?.username
+      ),
+      filter(Boolean)
+    );
   }
 }

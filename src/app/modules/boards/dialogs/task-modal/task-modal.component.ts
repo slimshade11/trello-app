@@ -1,8 +1,8 @@
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TaskModalPayload } from '@boards/interfaces/task-modal-payload.interface';
 import { TaskCustom } from '@boards/interfaces/task-custom.interface';
-import { Observable } from 'rxjs';
 import { BoardsFacade } from '@boards/boards.facade';
 
 @Component({
@@ -13,22 +13,31 @@ import { BoardsFacade } from '@boards/boards.facade';
 export class TaskModalComponent implements OnInit {
   task$!: Observable<TaskCustom>;
 
-  data: TaskModalPayload = this.dialogConfig.data;
+  taskModalData: TaskModalPayload = this.dialogConfig.data;
 
   constructor(
     private dialogConfig: DynamicDialogConfig,
-    private boardsFacade: BoardsFacade
+    private boardsFacade: BoardsFacade,
+    private dialogRef: DynamicDialogRef
   ) {}
 
   ngOnInit(): void {
-    this.task$ = this.boardsFacade.getTaskById$(this.data.taskId);
+    this.task$ = this.boardsFacade.getTaskById$(this.taskModalData.taskId);
   }
 
-  updateTaskName(taskName: string): void {
-    console.log('update task name', taskName);
+  updateTaskName(title: string): void {
+    const { taskId, columnId } = this.taskModalData;
+    this.boardsFacade.updateTask(taskId, columnId, { title });
   }
 
-  updateTaskDescription(taskDescription: string): void {
-    console.log('update task description', taskDescription);
+  updateTaskDescription(description: string): void {
+    const { taskId, columnId } = this.taskModalData;
+    this.boardsFacade.updateTask(taskId, columnId, {
+      description,
+    });
+  }
+
+  onCancelClick(): void {
+    this.dialogRef.close();
   }
 }

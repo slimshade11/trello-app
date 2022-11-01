@@ -44,10 +44,7 @@ export class LoginComponent extends DestroyComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (!this.form?.value) {
-      //toast here
-      return;
-    }
+    if (!this.form?.value) return;
 
     const loginPayload: LoginRequest = {
       email: this.form.value.email!,

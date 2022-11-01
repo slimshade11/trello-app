@@ -22,6 +22,15 @@
       ></app-inline-form>
     </div>
   </div>
+  <p-button
+    styleClass="flex-grow-1 p-button-danger w-full my-3"
+    label="Delete this task"
+  ></p-button>
+  <p-button
+    (onClick)="onCancelClick()"
+    styleClass="flex-grow-1 p-button-text w-full"
+    label="Cancel"
+  ></p-button>
 </ng-container>
 <ng-template #loading>
   <div class="flex justify-content-center">

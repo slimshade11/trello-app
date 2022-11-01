@@ -18,4 +18,23 @@ export class TasksState {
     const updatedTasks: TaskCustom[] = [...this.tasks$.getValue(), task];
     this.setTasks(updatedTasks);
   }
+
+  updateTasks(updatedTask: TaskCustom): void {
+    const updatedTasks = this.tasks$
+      .getValue()
+      .map((task: TaskCustom): TaskCustom => {
+        if (task.id === updatedTask.id) {
+          const { title, description, columnId } = updatedTask;
+          return {
+            ...task,
+            title,
+            description,
+            columnId,
+          };
+        }
+
+        return task;
+      });
+    this.setTasks(updatedTasks);
+  }
 }

@@ -1,29 +1,6 @@
 @use "index";
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@300;500;700&display=swap");
 
-$xs: 450px;
-$sm: 576px;
-$md: 768px;
-$lg: 992px;
-$xl: 1200px;
-$xxl: 1400px;
-
-$resolutions: (
-  "xs": $xs,
-  "sm": $sm,
-  "md": $md,
-  "lg": $lg,
-  "xl": $xl,
-  "xxl": $xxl,
-);
-
-@each $resolution, $i in $resolutions {
-  .container-max-w-#{$resolution} {
-    max-width: #{$i};
-    margin: 0 auto !important;
-  }
-}
-
 *,
 *::before,
 *::after {
@@ -60,4 +37,9 @@ ul {
   &:hover {
     box-shadow: 0 0 3px 5px rgba(255, 255, 255, 0.2);
   }
+}
+
+.container-md {
+  width: min(100% - 1rem, 840px);
+  margin-inline: auto;
 }

@@ -13,6 +13,7 @@ export class BoardsComponent extends DestroyComponent implements OnInit {
   isBoardsLoading$: Observable<boolean> =
     this.boardsFacade.getIsBoardsLoading$();
   boards$: Observable<Board[]> = this.boardsFacade.getBoards$();
+  username$: Observable<string> = this.boardsFacade.getUsername$();
 
   constructor(private boardsFacade: BoardsFacade) {
     super();
