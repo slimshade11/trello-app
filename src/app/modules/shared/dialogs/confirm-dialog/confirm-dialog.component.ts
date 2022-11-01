@@ -9,7 +9,7 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
 export class ConfirmDialogComponent {
   constructor(private dialogRef: DynamicDialogRef) {}
 
-  onSubmit(isDeleting: boolean): void {
-    this.dialogRef.close(isDeleting);
+  onSubmit(isConfirming: boolean): void {
+    this.dialogRef.close(isConfirming);
   }
 }

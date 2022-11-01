@@ -24,39 +24,37 @@
     </app-inline-form>
   </div>
 
-  <div class="flex align-items-center">
-    <div class="card-column" *ngFor="let column of data.columns">
-      <p-card>
-        <div class="column-title">
-          <app-inline-form
-            (handleSubmit)="updateColumnName($event, column.id)"
-            [defaultText]="column.title"
-            [title]="column.title"
-            class="edit-column-form"
-          ></app-inline-form>
-          <p-button
-            (onClick)="deleteColumn(column.id)"
-            icon="pi pi-delete-left"
-            styleClass="p-button-rounded p-button-text"
-          ></p-button>
-        </div>
-        <div
-          *ngFor="let task of data.tasks | getTasksByColumnId: column.id"
-          (click)="openTask(task.id)"
-          class="task"
-        >
-          {{ task.title }}
-        </div>
+  <div class="flex gap-3">
+    <p-card *ngFor="let column of data.columns">
+      <div class="flex justify-content-between">
         <app-inline-form
-          (handleSubmit)="createTask($event, column.id)"
-          [hasButton]="true"
-          defaultText="Add a card"
-          inputPlaceholder="Enter a title for this card"
-          buttonText="Add card"
-          class="create-task-form"
+          (handleSubmit)="updateColumnName($event, column.id)"
+          [defaultText]="column.title"
+          [title]="column.title"
+          class="edit-column-form"
         ></app-inline-form>
-      </p-card>
-    </div>
+        <p-button
+          (onClick)="deleteColumn(column.id)"
+          icon="pi pi-delete-left"
+          styleClass="p-button-rounded p-button-text"
+        ></p-button>
+      </div>
+      <div
+        *ngFor="let task of data.tasks | getTasksByColumnId: column.id"
+        (click)="openTask(task.id, column.id)"
+        class="task"
+      >
+        {{ task.title }}
+      </div>
+      <app-inline-form
+        (handleSubmit)="createTask($event, column.id)"
+        [hasButton]="true"
+        defaultText="Add a card"
+        inputPlaceholder="Enter a title for this card"
+        buttonText="Add card"
+        class="create-task-form"
+      ></app-inline-form>
+    </p-card>
   </div>
 </div>
 

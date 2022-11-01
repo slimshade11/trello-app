@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { InlineForm } from '@app/core/interfaces/inline-form.interface';
+import { InputTypes } from '@enums/input-types.enum';
+import { InlineForm } from '@interfaces/inline-form.interface';
 
 @Component({
   selector: 'app-inline-form',
@@ -13,11 +14,12 @@ export class InlineFormComponent {
   @Input() hasButton: boolean = false;
   @Input() buttonText: string = 'Submit';
   @Input() inputPlaceholder: string = '';
-  @Input() inputType: string = 'input';
+  @Input() inputType: string = InputTypes.INPUT;
 
   @Output() handleSubmit = new EventEmitter<string>();
 
   isEditing: boolean = false;
+  InputTypes = InputTypes;
   form: FormGroup<InlineForm> = this.fb.group({
     title: [''],
   });

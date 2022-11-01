@@ -1,1 +1,30 @@
-<p>task-modal works!</p>
+<ng-container *ngIf="task$ | async as task; else loading">
+  <div class="mt-3">
+    <div>Task name</div>
+    <div class="mt-2">
+      <app-inline-form
+        (handleSubmit)="updateTaskName($event)"
+        [defaultText]="task.title"
+        [title]="task.title"
+      ></app-inline-form>
+    </div>
+  </div>
+  <div class="mt-3">
+    <div>Description</div>
+    <div class="mt-2">
+      <app-inline-form
+        (handleSubmit)="updateTaskDescription($event)"
+        [defaultText]="task.description || 'Add a more detailed description'"
+        [title]="task.description || ''"
+        [hasButton]="true"
+        buttonText="Save"
+        inputType="textarea"
+      ></app-inline-form>
+    </div>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <div class="flex justify-content-center">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+</ng-template>

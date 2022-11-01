@@ -128,6 +128,10 @@ export class BoardsFacade {
     this.socketService.emit(SocketEvents.COLUMNS_DELETE, { boardId, columnId });
 
     this.columnsState.deleteColumn(columnId);
+    this.toastService.showInfoMessage(
+      ToastStatus.INFO,
+      'Column has been successfully deleted'
+    );
   }
 
   updateColumnName(
@@ -217,6 +221,15 @@ export class BoardsFacade {
 
   logout(): void {
     this.authFacade.logout();
+  }
+
+  getTaskById$(id: string): Observable<TaskCustom> {
+    return this.tasksState.getTasks$().pipe(
+      map((tasks: TaskCustom[]) => {
+        return tasks.find((task: TaskCustom) => task.id === id);
+      }),
+      filter(Boolean)
+    );
   }
 
   getIsBoardsLoading$(): Observable<boolean> {

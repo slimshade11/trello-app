@@ -10,6 +10,7 @@ import { BoardData } from '@boards/interfaces/board-data.interface';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TaskModalComponent } from '@boards/dialogs/task-modal/task-modal.component';
 import { ConfirmDialogComponent } from '@shared/dialogs/confirm-dialog/confirm-dialog.component';
+import { TaskModalPayload } from '@boards/interfaces/task-modal-payload.interface';
 import {
   take,
   Observable,
@@ -18,6 +19,7 @@ import {
   map,
   takeUntil,
   skipWhile,
+  filter,
 } from 'rxjs';
 import {
   ActivatedRoute,
@@ -177,7 +179,7 @@ export class BoardComponent extends DestroyComponent implements OnInit {
       header: 'Are you sure you want to delete the board?',
     });
 
-    dialogRef.onClose.subscribe({
+    dialogRef.onClose.pipe(takeUntil(this.destroy$)).subscribe({
       next: (isDeleting: boolean): void => {
         if (!isDeleting) return;
 
@@ -187,18 +189,44 @@ export class BoardComponent extends DestroyComponent implements OnInit {
   }
 
   deleteColumn(columnId: string): void {
-    this.boardsFacade.deleteColumn(this.boardId, columnId);
+    const dialogRef = this.dialogService.open(ConfirmDialogComponent, {
+      header: 'Are you sure you want to delete the column?',
+    });
+
+    dialogRef.onClose.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (isDeleting: boolean): void => {
+        if (!isDeleting) return;
+
+        this.boardsFacade.deleteColumn(this.boardId, columnId);
+      },
+    });
   }
 
-  openTask(taskId: string): void {
-    const taskModalPayload = {
+  openTask(taskId: string, columnId: string): void {
+    const taskModalPayload: TaskModalPayload = {
       taskId,
+      columnId,
+      boardId: this.boardId,
     };
 
+    let taskName: string | undefined;
+
+    this.boardData$
+      .pipe(
+        take(1),
+        tap(({ tasks }: BoardData) => {
+          taskName = tasks
+            .find((task) => task.id === taskId)
+            ?.title.toUpperCase();
+        })
+      )
+      .subscribe();
+
     this.dialogService.open(TaskModalComponent, {
-      header: '',
+      header: taskName,
       style: { width: '90%', maxWidth: '400px' },
       data: taskModalPayload,
+      closeOnEscape: true,
     });
   }
 }
