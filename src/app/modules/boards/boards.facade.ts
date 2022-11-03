@@ -135,6 +135,16 @@ export class BoardsFacade {
     );
   }
 
+  deleteTask(boardId: string, taskId: string): void {
+    this.socketService.emit(SocketEvents.TASKS_DELETE, { boardId, taskId });
+
+    this.tasksState.deleteTask(taskId);
+    this.toastService.showInfoMessage(
+      ToastStatus.INFO,
+      'Column has been successfully deleted'
+    );
+  }
+
   updateColumnName(
     boardId: string,
     columnId: string,
@@ -152,7 +162,6 @@ export class BoardsFacade {
     taskId: string,
     fields: { title?: string; description?: string; columnId?: string }
   ): void {
-    console.log(fields);
     this.socketService.emit(SocketEvents.TASKS_UPDATE, {
       boardId,
       taskId,
@@ -226,9 +235,9 @@ export class BoardsFacade {
     return this.socketService
       .listen<TaskCustom>(SocketEvents.TASKS_UPDATE_SUCCESS)
       .pipe(
-        tap((updatedTask: TaskCustom): void =>
-          this.tasksState.updateTasks(updatedTask)
-        )
+        tap((updatedTask: TaskCustom): void => {
+          this.tasksState.updateTasks(updatedTask);
+        })
       );
   }
 
@@ -236,6 +245,12 @@ export class BoardsFacade {
     return this.socketService
       .listen<Column>(SocketEvents.COLUMNS_DELETE_SUCCESS)
       .pipe(tap(({ id }: Column) => this.columnsState.deleteColumn(id)));
+  }
+
+  listenToDeleteTaskById$(): Observable<TaskCustom> {
+    return this.socketService
+      .listen<TaskCustom>(SocketEvents.TASKS_DELETE_SUCCESS)
+      .pipe(tap(({ id }: TaskCustom) => this.tasksState.deleteTask(id)));
   }
 
   leaveBoard(boardId: string): void {

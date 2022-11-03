@@ -19,6 +19,14 @@ export class TasksState {
     this.setTasks(updatedTasks);
   }
 
+  deleteTask(columnId: string): void {
+    const updatedTasks: TaskCustom[] = this.tasks$
+      .getValue()
+      .filter(({ id }: TaskCustom): boolean => id !== columnId);
+
+    this.setTasks(updatedTasks);
+  }
+
   updateTasks(updatedTask: TaskCustom): void {
     const updatedTasks = this.tasks$
       .getValue()

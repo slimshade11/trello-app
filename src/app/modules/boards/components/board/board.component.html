@@ -50,7 +50,7 @@
         <li
           *ngFor="let task of data.tasks | getTasksByColumnId: column.id"
           (click)="openTask(task.id, column.id)"
-          class="my-3 pointer"
+          class="my-3 text-center task"
         >
           {{ task.title }}
         </li>

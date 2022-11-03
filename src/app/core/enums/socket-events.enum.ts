@@ -29,4 +29,8 @@ export enum SocketEvents {
   TASKS_UPDATE = 'tasks:update',
   TASKS_UPDATE_SUCCESS = 'tasks:updateSuccess',
   TASKS_UPDATE_FAILURE = 'tasks:updateFailure',
+
+  TASKS_DELETE = 'tasks:delete',
+  TASKS_DELETE_SUCCESS = 'tasks:deleteSuccess',
+  TASKS_DELETE_FAILURE = 'tasks:deleteFailure',
 }
