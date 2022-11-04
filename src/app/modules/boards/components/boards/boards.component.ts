@@ -5,25 +5,24 @@ import { BoardsFacade } from '@boards/boards.facade';
 import { Observable, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-boards',
-  templateUrl: './boards.component.html',
-  styleUrls: ['./boards.component.scss'],
+    selector: 'app-boards',
+    templateUrl: './boards.component.html',
+    styleUrls: ['./boards.component.scss'],
 })
 export class BoardsComponent extends DestroyComponent implements OnInit {
-  isBoardsLoading$: Observable<boolean> =
-    this.boardsFacade.getIsBoardsLoading$();
-  boards$: Observable<Board[]> = this.boardsFacade.getBoards$();
-  username$: Observable<string> = this.boardsFacade.getUsername$();
+    isBoardsLoading$: Observable<boolean> = this.boardsFacade.getIsBoardsLoading$();
+    boards$: Observable<Board[]> = this.boardsFacade.getBoards$();
+    username$: Observable<string> = this.boardsFacade.getUsername$();
 
-  constructor(private boardsFacade: BoardsFacade) {
-    super();
-  }
+    constructor(private boardsFacade: BoardsFacade) {
+        super();
+    }
 
-  ngOnInit(): void {
-    this.boardsFacade.loadBoards$().pipe(takeUntil(this.destroy$)).subscribe();
-  }
+    ngOnInit(): void {
+        this.boardsFacade.loadBoards$().pipe(takeUntil(this.destroy$)).subscribe();
+    }
 
-  createBoard(title: string): void {
-    this.boardsFacade.createBoard$(title).subscribe();
-  }
+    createBoard(title: string): void {
+        this.boardsFacade.createBoard$(title).subscribe();
+    }
 }

@@ -1,41 +1,41 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2020",
-    "module": "es2020",
-    "lib": ["es2020", "dom"],
-    "paths": {
-      "@app/*": ["src/app/*"],
-      "@auth/*": ["src/app/modules/auth/*"],
-      "@home/*": ["src/app/modules/home/*"],
-      "@boards/*": ["src/app/modules/boards/*"],
-      "@shared/*": ["src/app/modules/shared/*"],
-      "@services/*": ["src/app/core/services/*"],
-      "@interfaces/*": ["src/app/core/interfaces/*"],
-      "@enums/*": ["src/app/core/enums/*"],
-      "@interceptors/*": ["src/app/core/interceptors/*"],
-      "@standalone/*": ["src/app/standalone/*"]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "es2020",
+        "module": "es2020",
+        "lib": ["es2020", "dom"],
+        "paths": {
+            "@app/*": ["src/app/*"],
+            "@auth/*": ["src/app/modules/auth/*"],
+            "@home/*": ["src/app/modules/home/*"],
+            "@boards/*": ["src/app/modules/boards/*"],
+            "@shared/*": ["src/app/modules/shared/*"],
+            "@services/*": ["src/app/core/services/*"],
+            "@interfaces/*": ["src/app/core/interfaces/*"],
+            "@enums/*": ["src/app/core/enums/*"],
+            "@interceptors/*": ["src/app/core/interceptors/*"],
+            "@standalone/*": ["src/app/standalone/*"]
+        }
+    },
+    "angularCompilerOptions": {
+        "enableI18nLegacyMessageIdFormat": false,
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true
     }
-  },
-  "angularCompilerOptions": {
-    "enableI18nLegacyMessageIdFormat": false,
-    "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  }
 }

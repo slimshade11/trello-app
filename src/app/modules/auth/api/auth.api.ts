@@ -9,26 +9,20 @@ import { LoginRequest } from '@auth/interfaces/login-request.interface';
 
 @Injectable()
 export class AuthApi {
-  constructor(
-    @Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig,
-    private http: HttpClient
-  ) {}
+    constructor(
+        @Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig,
+        private http: HttpClient
+    ) {}
 
-  loadCurrentUser$(): Observable<CurrentUser> {
-    return this.http.get<CurrentUser>(`${this.appConfig.BASE_URL}/user`);
-  }
+    loadCurrentUser$(): Observable<CurrentUser> {
+        return this.http.get<CurrentUser>(`${this.appConfig.BASE_URL}/user`);
+    }
 
-  register$(registerPayload: RegisterRequest): Observable<CurrentUser> {
-    return this.http.post<CurrentUser>(
-      `${this.appConfig.BASE_URL}/users`,
-      registerPayload
-    );
-  }
+    register$(registerPayload: RegisterRequest): Observable<CurrentUser> {
+        return this.http.post<CurrentUser>(`${this.appConfig.BASE_URL}/users`, registerPayload);
+    }
 
-  login$(loginPayload: LoginRequest): Observable<CurrentUser> {
-    return this.http.post<CurrentUser>(
-      `${this.appConfig.BASE_URL}/users/login`,
-      loginPayload
-    );
-  }
+    login$(loginPayload: LoginRequest): Observable<CurrentUser> {
+        return this.http.post<CurrentUser>(`${this.appConfig.BASE_URL}/users/login`, loginPayload);
+    }
 }

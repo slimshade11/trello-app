@@ -1,5 +1,5 @@
 export interface TaskModalPayload {
-  taskId: string;
-  columnId: string;
-  boardId: string;
+    taskId: string;
+    columnId: string;
+    boardId: string;
 }

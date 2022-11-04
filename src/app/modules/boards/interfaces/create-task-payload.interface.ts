@@ -1,5 +1,5 @@
 export interface CreateTaskPayload {
-  title: string;
-  columnId: string;
-  boardId: string;
+    title: string;
+    columnId: string;
+    boardId: string;
 }

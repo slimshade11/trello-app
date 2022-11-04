@@ -9,54 +9,54 @@ import { LoginRequest } from '@auth/interfaces/login-request.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
-  providers: [LoginFormService],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    providers: [LoginFormService],
 })
 export class LoginComponent extends DestroyComponent implements OnInit {
-  isAuthLoading$: Observable<boolean> = this.authFacade.getIsAuthLoading$();
+    isAuthLoading$: Observable<boolean> = this.authFacade.getIsAuthLoading$();
 
-  form: FormGroup<LoginForm> | null = null;
-  error!: string;
+    form: FormGroup<LoginForm> | null = null;
+    error!: string;
 
-  constructor(
-    @Self() private loginFormService: LoginFormService,
-    private authFacade: AuthFacade
-  ) {
-    super();
-  }
+    constructor(
+        @Self() private loginFormService: LoginFormService,
+        private authFacade: AuthFacade
+    ) {
+        super();
+    }
 
-  ngOnInit(): void {
-    this.getLoginForm();
-  }
+    ngOnInit(): void {
+        this.getLoginForm();
+    }
 
-  getLoginForm(): void {
-    this.loginFormService.buildForm();
-    this.loginFormService
-      .getLoginForm$()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (form: FormGroup<LoginForm> | null): void => {
-          this.form = form;
-        },
-      });
-  }
+    getLoginForm(): void {
+        this.loginFormService.buildForm();
+        this.loginFormService
+            .getLoginForm$()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe({
+                next: (form: FormGroup<LoginForm> | null): void => {
+                    this.form = form;
+                },
+            });
+    }
 
-  onSubmit(): void {
-    if (!this.form?.value) return;
+    onSubmit(): void {
+        if (!this.form?.value) return;
 
-    const loginPayload: LoginRequest = {
-      email: this.form.value.email!,
-      password: this.form.value.password!,
-    };
+        const loginPayload: LoginRequest = {
+            email: this.form.value.email!,
+            password: this.form.value.password!,
+        };
 
-    this.authFacade.login$(loginPayload).subscribe({
-      error: (err: HttpErrorResponse): void => {
-        this.error = err.error.emailOrPassword;
-      },
-    });
+        this.authFacade.login$(loginPayload).subscribe({
+            error: (err: HttpErrorResponse): void => {
+                this.error = err.error.emailOrPassword;
+            },
+        });
 
-    this.form.reset();
-  }
+        this.form.reset();
+    }
 }

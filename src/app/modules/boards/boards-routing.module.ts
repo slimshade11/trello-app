@@ -5,20 +5,20 @@ import { AuthGuard } from '@auth/guards/auth.guard';
 import { BoardComponent } from '@boards/components/board/board.component';
 
 const routes: Routes = [
-  {
-    path: 'boards',
-    component: BoardsComponent,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'boards/:id',
-    component: BoardComponent,
-    canActivate: [AuthGuard],
-  },
+    {
+        path: 'boards',
+        component: BoardsComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'boards/:id',
+        component: BoardComponent,
+        canActivate: [AuthGuard],
+    },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
 })
 export class BoardsRoutingModule {}

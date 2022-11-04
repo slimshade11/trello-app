@@ -1,4 +1,4 @@
 export interface CreateColumnPayload {
-  title: string;
-  boardId: string;
+    title: string;
+    boardId: string;
 }

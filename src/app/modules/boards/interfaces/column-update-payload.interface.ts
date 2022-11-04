@@ -1,5 +1,5 @@
 export interface ColumnUpdatePayload {
-  boardId: string;
-  columnId: string;
-  title: string;
+    boardId: string;
+    columnId: string;
+    title: string;
 }

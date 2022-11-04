@@ -12,28 +12,28 @@ import { SharedModule } from '@shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    AuthModule,
-    HttpClientModule,
-    BoardsModule,
-    SharedModule,
-    BrowserAnimationsModule,
-  ],
-  providers: [
-    {
-      provide: APP_SERVICE_CONFIG,
-      useValue: APP_CONFIG,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-    MessageService,
-  ],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AuthModule,
+        HttpClientModule,
+        BoardsModule,
+        SharedModule,
+        BrowserAnimationsModule,
+    ],
+    providers: [
+        {
+            provide: APP_SERVICE_CONFIG,
+            useValue: APP_CONFIG,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
+        },
+        MessageService,
+    ],
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

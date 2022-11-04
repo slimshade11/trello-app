@@ -1,48 +1,43 @@
 <app-menubar></app-menubar>
 <ng-container *ngIf="isAuthLoading$ | async; else loaded">
-  <div class="h-screen-menu flex align-items-center justify-content-center">
-    <p-progressSpinner></p-progressSpinner>
-  </div>
+    <div class="h-screen-menu flex align-items-center justify-content-center">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
 </ng-container>
 <ng-template #loaded>
-  <section class="px-3">
-    <div
-      class="flex flex-wrap justify-content-center align-items-center container-max-w-xl h-screen-menu"
-    >
-      <div class="w-12 md:w-6 md:pr-4">
-        <h1 class="text-4xl">
-          Trello helps teams work more collaboratively and get more done.
-        </h1>
-        <p class="mt-4">
-          Trello's boards, lists, and cards enable teams to organize and
-          prioritize projects in a fun, flexible and rewarding wat.
-        </p>
-      </div>
-      <div class="w-12 md:w-6">
-        <img
-          src="assets/images/back-women-black-blue-eyes-2K-wallpaper.jpg"
-          class="w-full"
-        />
-      </div>
-    </div>
-  </section>
-  <section class="px-3">
-    <div
-      class="flex justify-content-center align-items-center container-max-w-xl min-h-screen"
-    >
-      <div class="w-12 md:w-6">
-        <img
-          src="assets/images/back-women-black-blue-eyes-2K-wallpaper.jpg"
-          class="w-full border-round-lg"
-        />
-      </div>
-      <div class="w-12 md:w-6 md:pl-4">
-        <h1 class="text-4xl">Work with any team</h1>
-        <p class="mt-4">
-          Whether it's for work, a side project or even the next family
-          vacation, Trello helps your team stay organised.
-        </p>
-      </div>
-    </div>
-  </section>
+    <section class="px-3">
+        <div
+            class="flex flex-wrap justify-content-center align-items-center container-max-w-xl h-screen-menu">
+            <div class="w-12 md:w-6 md:pr-4">
+                <h1 class="text-4xl">
+                    Trello helps teams work more collaboratively and get more done.
+                </h1>
+                <p class="mt-4">
+                    Trello's boards, lists, and cards enable teams to organize and prioritize
+                    projects in a fun, flexible and rewarding wat.
+                </p>
+            </div>
+            <div class="w-12 md:w-6">
+                <img
+                    src="assets/images/back-women-black-blue-eyes-2K-wallpaper.jpg"
+                    class="w-full" />
+            </div>
+        </div>
+    </section>
+    <section class="px-3">
+        <div class="flex justify-content-center align-items-center container-max-w-xl min-h-screen">
+            <div class="w-12 md:w-6">
+                <img
+                    src="assets/images/back-women-black-blue-eyes-2K-wallpaper.jpg"
+                    class="w-full border-round-lg" />
+            </div>
+            <div class="w-12 md:w-6 md:pl-4">
+                <h1 class="text-4xl">Work with any team</h1>
+                <p class="mt-4">
+                    Whether it's for work, a side project or even the next family vacation, Trello
+                    helps your team stay organised.
+                </p>
+            </div>
+        </div>
+    </section>
 </ng-template>

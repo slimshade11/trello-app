@@ -6,37 +6,37 @@ import { AppConfig } from '@interfaces/app-config.interface';
 import { Observable, Subscriber } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class SocketService {
-  socket: Socket | undefined;
+    socket: Socket | undefined;
 
-  constructor(@Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig) {}
+    constructor(@Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig) {}
 
-  setupSocketConnection(currentUser: CurrentUser): void {
-    this.socket = io(this.appConfig.SOCKET_URL, {
-      auth: {
-        token: currentUser.token,
-      },
-    });
-  }
+    setupSocketConnection(currentUser: CurrentUser): void {
+        this.socket = io(this.appConfig.SOCKET_URL, {
+            auth: {
+                token: currentUser.token,
+            },
+        });
+    }
 
-  disconnect(): void {
-    if (!this.socket) throw new Error('Socket connection is not established');
-    this.socket.disconnect();
-  }
+    disconnect(): void {
+        if (!this.socket) throw new Error('Socket connection is not established');
+        this.socket.disconnect();
+    }
 
-  emit(eventName: string, message: any): void {
-    if (!this.socket) throw new Error('Socket connection is not established');
-    this.socket.emit(eventName, message);
-  }
+    emit(eventName: string, message: any): void {
+        if (!this.socket) throw new Error('Socket connection is not established');
+        this.socket.emit(eventName, message);
+    }
 
-  listen<T>(eventName: string): Observable<T> {
-    const socket = this.socket;
-    if (!socket) throw new Error('Socket connection is not established');
+    listen<T>(eventName: string): Observable<T> {
+        const socket = this.socket;
+        if (!socket) throw new Error('Socket connection is not established');
 
-    return new Observable((subscriber: Subscriber<T>) => {
-      socket.on(eventName, (data: any): void => subscriber.next(data));
-    });
-  }
+        return new Observable((subscriber: Subscriber<T>) => {
+            socket.on(eventName, (data: any): void => subscriber.next(data));
+        });
+    }
 }

@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class PersistanceService {
-  set(key: string, data: any): void {
-    try {
-      localStorage.setItem(key, JSON.stringify(data));
-    } catch (err) {
-      console.error('error set data to storage');
+    set(key: string, data: any): void {
+        try {
+            localStorage.setItem(key, JSON.stringify(data));
+        } catch (err) {
+            console.error('error set data to storage');
+        }
     }
-  }
 
-  get(key: string): any {
-    try {
-      return JSON.parse(localStorage.getItem(key) || '');
-    } catch (err) {
-      console.error(`error geting '${key}'`);
+    get(key: string): any {
+        try {
+            return JSON.parse(localStorage.getItem(key) || '');
+        } catch (err) {
+            console.error(`error geting '${key}'`);
+        }
     }
-  }
 
-  remove(key: string): void {
-    try {
-      localStorage.removeItem(key);
-    } catch (err) {
-      console.error('error removing data');
+    remove(key: string): void {
+        try {
+            localStorage.removeItem(key);
+        } catch (err) {
+            console.error('error removing data');
+        }
     }
-  }
 }

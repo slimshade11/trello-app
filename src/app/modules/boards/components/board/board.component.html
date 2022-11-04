@@ -1,69 +1,63 @@
 <app-top-bar></app-top-bar>
-<div *ngIf="boardData$ | async as data" class="mt-5">
-  <div class="flex align-items-center justify-content-between h-4rem px-3">
-    <div class="flex align-items-center">
-      <div class="mr-3">Board name:</div>
-      <app-inline-form
-        *ngIf="data.boardDetails?.title"
-        (handleSubmit)="updateBoardName($event)"
-        [defaultText]="data.boardDetails!.title | uppercase"
-        [title]="data.boardDetails!.title"
-        class="edit-board-form"
-      ></app-inline-form>
-    </div>
-    <p-button
-      (onClick)="deleteBoard()"
-      styleClass="p-button-danger"
-      label="Delete board"
-    >
-    </p-button>
-  </div>
-
-  <div class="p-4 flex justify-content-center">
-    <app-inline-form
-      (handleSubmit)="createColumn($event)"
-      [hasButton]="true"
-      defaultText="Add a list"
-      buttonText="Add list"
-      inputPlaceholder="Add column name"
-    >
-    </app-inline-form>
-  </div>
-  <div class="flex gap-3 flex-wrap">
-    <p-card
-      *ngFor="let column of data.columns"
-      styleClass="column border-round-xl"
-    >
-      <div class="flex justify-content-end">
+<div
+    *ngIf="boardData$ | async as data"
+    class="mt-5">
+    <div class="flex align-items-center justify-content-between h-4rem px-3">
+        <div class="flex align-items-center">
+            <div class="mr-3">Board name:</div>
+            <app-inline-form
+                *ngIf="data.boardDetails?.title"
+                (handleSubmit)="updateBoardName($event)"
+                [defaultText]="data.boardDetails!.title | uppercase"
+                [title]="data.boardDetails!.title"
+                class="edit-board-form"></app-inline-form>
+        </div>
         <p-button
-          (onClick)="deleteColumn(column.id)"
-          icon="pi pi-times"
-          styleClass="p-button-rounded p-button-text"
-        ></p-button>
-      </div>
-      <app-inline-form
-        (handleSubmit)="updateColumnName($event, column.id)"
-        [defaultText]="column.title | uppercase"
-        [title]="column.title"
-      ></app-inline-form>
-      <ul>
-        <li
-          *ngFor="let task of data.tasks | getTasksByColumnId: column.id"
-          (click)="openTask(task.id, column.id)"
-          class="my-3 text-center task"
-        >
-          {{ task.title }}
-        </li>
-      </ul>
-      <div class="mt-5">
+            (onClick)="deleteBoard()"
+            styleClass="p-button-danger"
+            label="Delete board">
+        </p-button>
+    </div>
+
+    <div class="p-4 flex justify-content-center">
         <app-inline-form
-          (handleSubmit)="createTask($event, column.id)"
-          [hasButton]="true"
-          defaultText="Add a card"
-          inputPlaceholder="Enter a title for this card"
-          buttonText="Add card"
-        ></app-inline-form>
-      </div>
-    </p-card>
-  </div>
+            (handleSubmit)="createColumn($event)"
+            [hasButton]="true"
+            defaultText="Add a list"
+            buttonText="Add list"
+            inputPlaceholder="Add column name">
+        </app-inline-form>
+    </div>
+    <div class="flex gap-3 flex-wrap">
+        <p-card
+            *ngFor="let column of data.columns"
+            styleClass="column border-round-xl">
+            <div class="flex justify-content-end">
+                <p-button
+                    (onClick)="deleteColumn(column.id)"
+                    icon="pi pi-times"
+                    styleClass="p-button-rounded p-button-text"></p-button>
+            </div>
+            <app-inline-form
+                (handleSubmit)="updateColumnName($event, column.id)"
+                [defaultText]="column.title | uppercase"
+                [title]="column.title"></app-inline-form>
+            <ul>
+                <li
+                    *ngFor="let task of data.tasks | getTasksByColumnId: column.id"
+                    (click)="openTask(task.id, column.id)"
+                    class="my-3 text-center task">
+                    {{ task.title }}
+                </li>
+            </ul>
+            <div class="mt-5">
+                <app-inline-form
+                    (handleSubmit)="createTask($event, column.id)"
+                    [hasButton]="true"
+                    defaultText="Add a card"
+                    inputPlaceholder="Enter a title for this card"
+                    buttonText="Add card"></app-inline-form>
+            </div>
+        </p-card>
+    </div>
 </div>

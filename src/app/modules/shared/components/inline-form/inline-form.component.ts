@@ -4,46 +4,46 @@ import { InputTypes } from '@enums/input-types.enum';
 import { InlineForm } from '@interfaces/inline-form.interface';
 
 @Component({
-  selector: 'app-inline-form',
-  templateUrl: './inline-form.component.html',
-  styleUrls: ['./inline-form.component.scss'],
+    selector: 'app-inline-form',
+    templateUrl: './inline-form.component.html',
+    styleUrls: ['./inline-form.component.scss'],
 })
 export class InlineFormComponent {
-  @Input() title: string = '';
-  @Input() defaultText: string = 'Not defined';
-  @Input() hasButton: boolean = false;
-  @Input() buttonText: string = 'Submit';
-  @Input() inputPlaceholder: string = '';
-  @Input() inputType: string = InputTypes.INPUT;
+    @Input() title: string = '';
+    @Input() defaultText: string = 'Not defined';
+    @Input() hasButton: boolean = false;
+    @Input() buttonText: string = 'Submit';
+    @Input() inputPlaceholder: string = '';
+    @Input() inputType: string = InputTypes.INPUT;
 
-  @Output() handleSubmit = new EventEmitter<string>();
+    @Output() handleSubmit = new EventEmitter<string>();
 
-  isEditing: boolean = false;
-  InputTypes = InputTypes;
-  form: FormGroup<InlineForm> = this.fb.group({
-    title: [''],
-  });
+    isEditing: boolean = false;
+    InputTypes = InputTypes;
+    form: FormGroup<InlineForm> = this.fb.group({
+        title: [''],
+    });
 
-  constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder) {}
 
-  activeEditing(): void {
-    if (this.title) {
-      this.form.patchValue({ title: this.title });
+    activeEditing(): void {
+        if (this.title) {
+            this.form.patchValue({ title: this.title });
+        }
+
+        this.isEditing = true;
     }
 
-    this.isEditing = true;
-  }
+    onSubmit(): void {
+        if (this.form.value.title) {
+            this.handleSubmit.emit(this.form.value.title);
+        }
 
-  onSubmit(): void {
-    if (this.form.value.title) {
-      this.handleSubmit.emit(this.form.value.title);
+        this.isEditing = false;
+        this.form.reset();
     }
 
-    this.isEditing = false;
-    this.form.reset();
-  }
-
-  cancelEditing(): void {
-    this.isEditing = false;
-  }
+    cancelEditing(): void {
+        this.isEditing = false;
+    }
 }

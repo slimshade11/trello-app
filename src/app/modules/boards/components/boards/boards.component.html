@@ -3,27 +3,25 @@
 <h1 class="text-center">Hello {{ username$ | async }}!</h1>
 
 <div class="flex-grow-1 flex flex-column mt-5 mx-3">
-  <h1 class="font-bold text-5xl mb-5">Your boards</h1>
-  <div class="flex">
-    <div class="w-12rem mr-3">
-      <app-inline-form
-        (handleSubmit)="createBoard($event)"
-        defaultText="Create new board"
-        class="mr-3"
-      ></app-inline-form>
+    <h1 class="font-bold text-5xl mb-5">Your boards</h1>
+    <div class="flex">
+        <div class="w-12rem mr-3">
+            <app-inline-form
+                (handleSubmit)="createBoard($event)"
+                defaultText="Create new board"
+                class="mr-3"></app-inline-form>
+        </div>
+        <div class="flex gap-3 flex-wrap">
+            <a
+                *ngFor="let board of boards$ | async"
+                [routerLink]="['/boards', board.id]"
+                class="board border-round-xl">
+                <p-card styleClass="border-round-xl column">
+                    <ng-template pTemplate="content">
+                        <div class="text-center">{{ board.title }}</div>
+                    </ng-template>
+                </p-card>
+            </a>
+        </div>
     </div>
-    <div class="flex gap-3 flex-wrap">
-      <a
-        *ngFor="let board of boards$ | async"
-        [routerLink]="['/boards', board.id]"
-        class="board border-round-xl"
-      >
-        <p-card styleClass="border-round-xl column">
-          <ng-template pTemplate="content">
-            <div class="text-center">{{ board.title }}</div>
-          </ng-template>
-        </p-card>
-      </a>
-    </div>
-  </div>
 </div>

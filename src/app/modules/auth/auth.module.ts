@@ -11,8 +11,8 @@ import { LoginComponent } from '@auth/components/login/login.component';
 import { AuthGuard } from '@auth/guards/auth.guard';
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent],
-  imports: [CommonModule, AuthRoutingModule, SharedModule, ReactiveFormsModule],
-  providers: [AuthFacade, AuthApi, AuthService, AuthGuard],
+    declarations: [RegisterComponent, LoginComponent],
+    imports: [CommonModule, AuthRoutingModule, SharedModule, ReactiveFormsModule],
+    providers: [AuthFacade, AuthApi, AuthService, AuthGuard],
 })
 export class AuthModule {}

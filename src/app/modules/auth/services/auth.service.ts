@@ -6,16 +6,16 @@ import { AppConfig } from '@interfaces/app-config.interface';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    @Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig,
-    private persistanceService: PersistanceService
-  ) {}
+    constructor(
+        @Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig,
+        private persistanceService: PersistanceService
+    ) {}
 
-  setToken(currentUser: CurrentUser): void {
-    this.persistanceService.set(this.appConfig.TOKEN, currentUser.token);
-  }
+    setToken(currentUser: CurrentUser): void {
+        this.persistanceService.set(this.appConfig.TOKEN, currentUser.token);
+    }
 
-  logout(): void {
-    this.persistanceService.remove(this.appConfig.TOKEN);
-  }
+    logout(): void {
+        this.persistanceService.remove(this.appConfig.TOKEN);
+    }
 }

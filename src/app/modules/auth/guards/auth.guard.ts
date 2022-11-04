@@ -4,24 +4,20 @@ import { map, Observable } from 'rxjs';
 import { AuthFacade } from '@auth/auth.facade';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authFacade: AuthFacade, private router: Router) {}
-  canActivate():
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return this.authFacade.getIsLoggedIn$().pipe(
-      map((isLoggedin: boolean): boolean => {
-        if (isLoggedin) {
-          return true;
-        }
+    constructor(private authFacade: AuthFacade, private router: Router) {}
+    canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+        return this.authFacade.getIsLoggedIn$().pipe(
+            map((isLoggedin: boolean): boolean => {
+                if (isLoggedin) {
+                    return true;
+                }
 
-        this.router.navigateByUrl('/');
-        return false;
-      })
-    );
-  }
+                this.router.navigateByUrl('/');
+                return false;
+            })
+        );
+    }
 }

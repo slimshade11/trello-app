@@ -7,13 +7,13 @@ import { TaskCustom } from '@boards/interfaces/task-custom.interface';
 
 @Injectable()
 export class TasksApi {
-  constructor(
-    @Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig,
-    private http: HttpClient
-  ) {}
+    constructor(
+        @Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig,
+        private http: HttpClient
+    ) {}
 
-  getTasks$(boardId: string): Observable<TaskCustom[]> {
-    const endpoint: string = `${this.appConfig.BASE_URL}/boards/${boardId}/tasks`;
-    return this.http.get<TaskCustom[]>(endpoint);
-  }
+    getTasks$(boardId: string): Observable<TaskCustom[]> {
+        const endpoint: string = `${this.appConfig.BASE_URL}/boards/${boardId}/tasks`;
+        return this.http.get<TaskCustom[]>(endpoint);
+    }
 }

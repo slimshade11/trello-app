@@ -17,18 +17,18 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { TaskModalComponent } from './dialogs/task-modal/task-modal.component';
 
 @NgModule({
-  declarations: [BoardsComponent, BoardComponent, GetTasksByColumnIdPipe, TaskModalComponent],
-  imports: [CommonModule, BoardsRoutingModule, SharedModule],
-  providers: [
-    BoardsFacade,
-    BoardsState,
-    TasksApi,
-    BoardsApi,
-    ColumnsApi,
-    ColumnsState,
-    TasksState,
-    BoardService,
-    DialogService,
-  ],
+    declarations: [BoardsComponent, BoardComponent, GetTasksByColumnIdPipe, TaskModalComponent],
+    imports: [CommonModule, BoardsRoutingModule, SharedModule],
+    providers: [
+        BoardsFacade,
+        BoardsState,
+        TasksApi,
+        BoardsApi,
+        ColumnsApi,
+        ColumnsState,
+        TasksState,
+        BoardService,
+        DialogService,
+    ],
 })
 export class BoardsModule {}

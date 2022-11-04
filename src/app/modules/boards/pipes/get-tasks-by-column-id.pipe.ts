@@ -3,12 +3,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { BoardService } from '@boards/services/board.service';
 
 @Pipe({
-  name: 'getTasksByColumnId',
+    name: 'getTasksByColumnId',
 })
 export class GetTasksByColumnIdPipe implements PipeTransform {
-  constructor(private boardsService: BoardService) {}
+    constructor(private boardsService: BoardService) {}
 
-  transform(tasks: TaskCustom[], columnId: string): TaskCustom[] {
-    return this.boardsService.getTasksByColumnId(columnId, tasks);
-  }
+    transform(tasks: TaskCustom[], columnId: string): TaskCustom[] {
+        return this.boardsService.getTasksByColumnId(columnId, tasks);
+    }
 }

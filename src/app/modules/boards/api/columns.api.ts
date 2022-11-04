@@ -7,14 +7,12 @@ import { Column } from '@boards/interfaces/column.interface';
 
 @Injectable()
 export class ColumnsApi {
-  constructor(
-    @Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig,
-    private http: HttpClient
-  ) {}
+    constructor(
+        @Inject(APP_SERVICE_CONFIG) private appConfig: AppConfig,
+        private http: HttpClient
+    ) {}
 
-  loadColumns$(boardId: string): Observable<Column[]> {
-    return this.http.get<Column[]>(
-      `${this.appConfig.BASE_URL}/boards/${boardId}/columns`
-    );
-  }
+    loadColumns$(boardId: string): Observable<Column[]> {
+        return this.http.get<Column[]>(`${this.appConfig.BASE_URL}/boards/${boardId}/columns`);
+    }
 }

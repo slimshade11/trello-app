@@ -7,51 +7,48 @@ import { BoardsFacade } from '@boards/boards.facade';
 import { DestroyComponent } from '@app/standalone/components/destroy/destroy.component';
 
 @Component({
-  selector: 'app-task-modal',
-  templateUrl: './task-modal.component.html',
-  styleUrls: ['./task-modal.component.scss'],
+    selector: 'app-task-modal',
+    templateUrl: './task-modal.component.html',
+    styleUrls: ['./task-modal.component.scss'],
 })
 export class TaskModalComponent extends DestroyComponent implements OnInit {
-  task$!: Observable<TaskCustom>;
+    task$!: Observable<TaskCustom>;
 
-  taskModalData: TaskModalPayload = this.dialogConfig.data;
+    taskModalData: TaskModalPayload = this.dialogConfig.data;
 
-  constructor(
-    private dialogConfig: DynamicDialogConfig,
-    private boardsFacade: BoardsFacade,
-    private dialogRef: DynamicDialogRef
-  ) {
-    super();
-  }
+    constructor(
+        private dialogConfig: DynamicDialogConfig,
+        private boardsFacade: BoardsFacade,
+        private dialogRef: DynamicDialogRef
+    ) {
+        super();
+    }
 
-  ngOnInit(): void {
-    this.task$ = this.boardsFacade.getTaskById$(this.taskModalData.taskId);
+    ngOnInit(): void {
+        this.task$ = this.boardsFacade.getTaskById$(this.taskModalData.taskId);
 
-    this.boardsFacade
-      .listenToSocketUpdateTask$()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
-  }
+        this.boardsFacade.listenToSocketUpdateTask$().pipe(takeUntil(this.destroy$)).subscribe();
+    }
 
-  updateTaskName(title: string): void {
-    const { taskId, boardId } = this.taskModalData;
-    this.boardsFacade.updateTask(boardId, taskId, { title });
-  }
+    updateTaskName(title: string): void {
+        const { taskId, boardId } = this.taskModalData;
+        this.boardsFacade.updateTask(boardId, taskId, { title });
+    }
 
-  updateTaskDescription(description: string): void {
-    const { taskId, boardId } = this.taskModalData;
-    this.boardsFacade.updateTask(boardId, taskId, {
-      description,
-    });
-  }
+    updateTaskDescription(description: string): void {
+        const { taskId, boardId } = this.taskModalData;
+        this.boardsFacade.updateTask(boardId, taskId, {
+            description,
+        });
+    }
 
-  onDeleteTaskClick(): void {
-    const { taskId, boardId } = this.taskModalData;
-    this.boardsFacade.deleteTask(boardId, taskId);
-    this.dialogRef.close();
-  }
+    onDeleteTaskClick(): void {
+        const { taskId, boardId } = this.taskModalData;
+        this.boardsFacade.deleteTask(boardId, taskId);
+        this.dialogRef.close();
+    }
 
-  onCancelClick(): void {
-    this.dialogRef.close();
-  }
+    onCancelClick(): void {
+        this.dialogRef.close();
+    }
 }
